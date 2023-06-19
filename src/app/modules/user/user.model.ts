@@ -2,28 +2,29 @@ import { Schema, model } from 'mongoose'
 import { IUser, IUserModel } from './user.interface'
 import { USER_ROLE_ARRAY } from './user.constant'
 
-const nameSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    maxlength: 50,
-    minlength: 3,
+const nameSchema = new Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      maxlength: 50,
+      minlength: 3,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      maxlength: 50,
+      minlength: 3,
+    },
   },
-  lastName: {
-    type: String,
-    required: true,
-    maxlength: 50,
-    minlength: 3,
-  },
-})
+  { _id: false }
+)
 
 const userSchema = new Schema<IUser>({
   name: nameSchema,
   password: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 10,
   },
   image: {
     type: String,

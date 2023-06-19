@@ -23,7 +23,7 @@ app.get('/', async (req, res, next) => {
 })
 
 // All routes here
-// app.use('/api/v1', routes)
+app.use('/api/v1', routes)
 
 // Global error handler
 app.use(globalErrorHandler)

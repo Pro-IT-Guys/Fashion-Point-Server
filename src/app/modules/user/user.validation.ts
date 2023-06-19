@@ -17,12 +17,9 @@ const createUserZodSchema = z.object({
         .min(3)
         .max(50),
     }),
-    password: z
-      .string({
-        required_error: 'Password is required',
-      })
-      .min(6)
-      .max(10),
+    password: z.string({
+      required_error: 'Password is required',
+    }),
     image: z.string().optional(),
     phone: z.string().optional(),
     email: z
