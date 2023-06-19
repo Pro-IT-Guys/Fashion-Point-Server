@@ -1,4 +1,5 @@
 import httpStatus from 'http-status'
+import cron from 'node-cron'
 import jwt from 'jsonwebtoken'
 import ApiError from '../../../errors/ApiError'
 import hashPassword from '../../helpers/hashPassword'
@@ -30,10 +31,52 @@ const signupUser = async (userData: IUser): Promise<IUserResponse> => {
   const user = await userModel.create({
     password: hashedPassword,
     ...rest,
-    codeGenerationTimestamp: codeGenerationTimestamp,
+    codeGenerationTimestamp,
     verificationCode,
   })
   if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'User creation failed')
+
+  return { accessToken, data: { role: user.role } }
+}
+
+const verifyUser = async (
+  email: string,
+  verificationCode: string
+): Promise<IUserResponse> => {
+  const user = await userModel.findOne({ email })
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+
+  if (user.verificationCode !== verificationCode) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect verification code')
+  }
+
+  const currentTimestamp = Date.now()
+  const generationTimestamp = user.codeGenerationTimestamp || 0
+  const elapsedTime = currentTimestamp - Number(generationTimestamp)
+
+  if (elapsedTime > 5 * 60 * 1000) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Expired verification code')
+  }
+
+  // Schedule the code deletion using node-cron
+  const task = cron.schedule(
+    `*/5 * * * *`,
+    async () => {
+      user.verificationCode = undefined
+      user.codeGenerationTimestamp = undefined
+      await user.save()
+    },
+    {
+      scheduled: false,
+    }
+  )
+
+  // Start the scheduled task
+  task.start()
+
+  const accessToken = jwt.sign({ email }, config.access_token as string, {
+    expiresIn: '1d',
+  })
 
   return { accessToken, data: { role: user.role } }
 }
@@ -71,6 +114,7 @@ const loggedInUser = async (token: string): Promise<IUser> => {
 
 export const AuthService = {
   signupUser,
+  verifyUser,
   loginUser,
   loggedInUser,
 }

@@ -21,6 +21,22 @@ const signupUser = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const verifyUser = catchAsync(async (req: Request, res: Response) => {
+  const { email, verificationCode } = req.body
+  const user = await AuthService.verifyUser(email, verificationCode)
+
+  const { accessToken, data } = user
+  res
+    .header('Authorization', `Bearer ${accessToken}`)
+    .header('Access-Control-Expose-Headers', 'Authorization')
+    .json({
+      message: 'User verified successfully',
+      data,
+      success: true,
+      statusCode: httpStatus.OK,
+    })
+})
+
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const userData = req.body
   const user = await AuthService.loginUser(userData)
@@ -55,6 +71,7 @@ const loggedInUser = catchAsync(async (req: Request, res: Response) => {
 
 export const AuthController = {
   signupUser,
+  verifyUser,
   loginUser,
   loggedInUser,
 }

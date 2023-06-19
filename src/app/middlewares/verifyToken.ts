@@ -1,28 +1,42 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
 import ApiError from '../../errors/ApiError'
 import httpStatus from 'http-status'
+import userModel from '../modules/user/user.model'
 
 declare module 'express' {
   interface Request {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    user?: any // Replace `any` with the actual type of `user` if known
+    user?: JwtPayload
   }
 }
 
-export default function verifyToken(
+export default async function verifyToken(
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): Promise<void> {
   const token = req.headers.authorization?.split(' ')[1] || ''
   if (!token) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Token not found')
   }
 
   try {
-    const decoded = jwt.verify(token, config.access_token as string)
+    const decoded = jwt.verify(
+      token,
+      config.access_token as string
+    ) as JwtPayload
+
+    // Verify if the token is expired
+    const currentTimestamp = Math.floor(Date.now() / 1000)
+    if (decoded.exp && decoded.exp < currentTimestamp) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Token has expired')
+    }
+
+    const email = decoded.email
+    const user = await userModel.findOne({ email })
+    if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'Invalid token')
+
     req.user = decoded
     next()
   } catch (error) {

@@ -1,0 +1,5 @@
+Tue Jun 20 2023 | 0:45:7 [Error Log] error: User not found
+Tue Jun 20 2023 | 0:45:58 [Error Log] error: User not found
+Tue Jun 20 2023 | 0:47:41 [Error Log] error: User not found
+Tue Jun 20 2023 | 0:56:15 [Error Log] error: Cannot destructure property 'email' of 'req.user' as it is undefined.
+Tue Jun 20 2023 | 0:58:43 [Error Log] error: Cannot destructure property 'email' of 'req.user' as it is undefined.
