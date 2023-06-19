@@ -19,7 +19,9 @@ const signupUser = async (userData: IUser): Promise<IUserResponse> => {
 
   const verificationCode = generateRandomCode()
   const codeGenerationTimestamp = Date.now()
-  const codeSent = sendEmail(email, 'subject', verificationCode)
+  const subject = 'Verify your email'
+  const message = `Your verification code is ${verificationCode}.\nThis code will expire in 5 minutes.\nDon't share it with anyone`
+  const codeSent = sendEmail(email, subject, message)
 
   if (!codeSent)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Code could not be sent')
