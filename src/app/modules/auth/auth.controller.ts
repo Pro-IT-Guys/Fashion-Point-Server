@@ -9,13 +9,12 @@ const signupUser = catchAsync(async (req: Request, res: Response) => {
   const userData = req.body
   const user = await AuthService.signupUser(userData)
 
-  const { accessToken, data } = user
+  const { accessToken } = user
   res
     .header('Authorization', `Bearer ${accessToken}`)
     .header('Access-Control-Expose-Headers', 'Authorization')
     .json({
-      message: 'User registered successfully',
-      data,
+      message: 'Check your email for verification code',
       success: true,
       statusCode: httpStatus.CREATED,
     })

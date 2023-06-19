@@ -59,7 +59,7 @@ const verifyOtp = async (
   }
 
   // Schedule the code deletion using node-cron
-  const task = cron.schedule(
+  cron.schedule(
     `*/5 * * * *`,
     async () => {
       user.verificationCode = undefined
@@ -67,12 +67,10 @@ const verifyOtp = async (
       await user.save()
     },
     {
-      scheduled: false,
+      scheduled: true,
+      timezone: 'Asia/Dhaka',
     }
   )
-
-  // Start the scheduled task
-  task.start()
 
   const accessToken = jwt.sign({ email }, config.access_token as string, {
     expiresIn: '1d',
