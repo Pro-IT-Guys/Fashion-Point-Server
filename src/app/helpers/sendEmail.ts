@@ -1,18 +1,19 @@
 import nodemailer from 'nodemailer'
+import config from '../../config'
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.APP_EMAIL,
-    pass: process.env.APP_PASSWORD,
+    user: config.app_email,
+    pass: config.app_password,
   },
 })
 
 function sendEmail(recipient: string, subject: string, message: string) {
   // setup email data with unicode symbols
   const mailOptions = {
-    from: process.env.APP_EMAIL,
+    from: config.app_email,
     to: recipient,
     subject: subject,
     text: message,
