@@ -4,11 +4,7 @@ import userModel from '../modules/user/user.model'
 import ApiError from '../../errors/ApiError'
 import httpStatus from 'http-status'
 
-exports.verifyAdmin = function (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
   verifyToken(req, res, function () {
     isAdmin(req, res, next)
   })
@@ -22,9 +18,13 @@ async function isAdmin(req: Request, res: Response, next: NextFunction) {
   if (email && user.role === 'admin') {
     next()
   } else {
-    throw new ApiError(
-      httpStatus.UNAUTHORIZED,
-      'You are not authorized to perform this action'
-    )
+    res.status(403).json({
+      message: 'You are not authorized to perform this action',
+      success: false,
+      statusCode: httpStatus.FORBIDDEN,
+      data: null,
+    })
   }
 }
+
+export default verifyAdmin
