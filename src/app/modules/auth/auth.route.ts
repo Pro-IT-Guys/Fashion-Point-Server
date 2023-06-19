@@ -10,7 +10,7 @@ router.post(
   validateRequest(UserValidation.createUserZodSchema),
   AuthController.signupUser
 )
-router.post('/verify', AuthController.verifyUser)
+router.post('/verify', AuthController.verifyOtp)
 router.post('/login', AuthController.loginUser)
 router.get('/me', AuthController.loggedInUser)
 

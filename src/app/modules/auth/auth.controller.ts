@@ -21,9 +21,9 @@ const signupUser = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
-const verifyUser = catchAsync(async (req: Request, res: Response) => {
+const verifyOtp = catchAsync(async (req: Request, res: Response) => {
   const { email, verificationCode } = req.body
-  const user = await AuthService.verifyUser(email, verificationCode)
+  const user = await AuthService.verifyOtp(email, verificationCode)
 
   const { accessToken, data } = user
   res
@@ -71,7 +71,7 @@ const loggedInUser = catchAsync(async (req: Request, res: Response) => {
 
 export const AuthController = {
   signupUser,
-  verifyUser,
+  verifyOtp,
   loginUser,
   loggedInUser,
 }

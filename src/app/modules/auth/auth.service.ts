@@ -39,7 +39,7 @@ const signupUser = async (userData: IUser): Promise<IUserResponse> => {
   return { accessToken, data: { role: user.role } }
 }
 
-const verifyUser = async (
+const verifyOtp = async (
   email: string,
   verificationCode: string
 ): Promise<IUserResponse> => {
@@ -114,7 +114,7 @@ const loggedInUser = async (token: string): Promise<IUser> => {
 
 export const AuthService = {
   signupUser,
-  verifyUser,
+  verifyOtp,
   loginUser,
   loggedInUser,
 }
