@@ -7,6 +7,8 @@ import userModel from '../user/user.model'
 import checkPassword from '../../helpers/checkPassword'
 import config from '../../../config'
 import { IJwtPayload, IUserResponse } from './auth.interface'
+import generateRandomCode from '../../../shared/generateRandomCode'
+import sendEmail from '../../helpers/sendEmail'
 
 const signupUser = async (userData: IUser): Promise<IUserResponse> => {
   const { password, ...rest } = userData
@@ -15,8 +17,20 @@ const signupUser = async (userData: IUser): Promise<IUserResponse> => {
     expiresIn: '1d',
   })
 
+  const verificationCode = generateRandomCode()
+  const codeGenerationTimestamp = Date.now()
+  const codeSent = sendEmail(email, 'subject', verificationCode)
+
+  if (!codeSent)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Code could not be sent')
+
   const hashedPassword = await hashPassword(password)
-  const user = await userModel.create({ password: hashedPassword, ...rest })
+  const user = await userModel.create({
+    password: hashedPassword,
+    ...rest,
+    codeGenerationTimestamp: codeGenerationTimestamp,
+    verificationCode,
+  })
   if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'User creation failed')
 
   return { accessToken, data: { role: user.role } }

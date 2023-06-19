@@ -20,35 +20,46 @@ const nameSchema = new Schema(
   { _id: false }
 )
 
-const userSchema = new Schema<IUser>({
-  name: nameSchema,
-  password: {
-    type: String,
-    required: true,
+const userSchema = new Schema<IUser>(
+  {
+    name: nameSchema,
+    password: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    role: {
+      type: String,
+      enum: USER_ROLE_ARRAY,
+      required: true,
+    },
+    address: {
+      type: String,
+    },
+    shippingAddress: {
+      type: String,
+    },
+    verificationCode: {
+      type: String,
+      required: true,
+    },
+    codeGenerationTimestamp: {
+      type: String,
+      required: true,
+    },
   },
-  image: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  role: {
-    type: String,
-    enum: USER_ROLE_ARRAY,
-    required: true,
-  },
-  address: {
-    type: String,
-  },
-  shippingAddress: {
-    type: String,
-  },
-})
+  { timestamps: true }
+)
 
 const userModel = model<IUser, IUserModel>('User', userSchema)
 export default userModel
