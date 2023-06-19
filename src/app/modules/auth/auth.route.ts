@@ -11,5 +11,6 @@ router.post(
   AuthController.signupUser
 )
 router.post('/login', AuthController.loginUser)
+router.get('/me', AuthController.loggedInUser)
 
 export const AuthRoute = router

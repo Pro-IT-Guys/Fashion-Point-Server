@@ -6,7 +6,7 @@ import { IUser } from '../user/user.interface'
 import userModel from '../user/user.model'
 import checkPassword from '../../helpers/checkPassword'
 import config from '../../../config'
-import { IUserResponse } from './auth.interface'
+import { IJwtPayload, IUserResponse } from './auth.interface'
 
 const signupUser = async (userData: IUser): Promise<IUserResponse> => {
   const { password, ...rest } = userData
@@ -38,7 +38,23 @@ const loginUser = async (userData: IUser): Promise<IUserResponse> => {
   return { accessToken, data: { role: user.role } }
 }
 
+const loggedInUser = async (token: string): Promise<IUser> => {
+  const decodedToken = jwt.verify(
+    token,
+    config.access_token as string
+  ) as IJwtPayload
+
+  const email = decodedToken.email
+  const user = await userModel
+    .findOne({ email })
+    .select({ password: 0, updatedAt: 0, createdAt: 0, __v: 0 })
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+
+  return user
+}
+
 export const AuthService = {
   signupUser,
   loginUser,
+  loggedInUser,
 }

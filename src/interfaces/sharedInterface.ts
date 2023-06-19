@@ -23,6 +23,6 @@ export interface IGenericResponse<T> {
     limit?: number
     total?: number
   }
-  data?: T
+  data: T
   message: string
 }
