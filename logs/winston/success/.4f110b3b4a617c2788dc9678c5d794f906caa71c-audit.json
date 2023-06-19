@@ -1,15 +1,20 @@
 {
-  "keep": {
-    "days": true,
-    "amount": 14
-  },
-  "auditLog": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\.4f110b3b4a617c2788dc9678c5d794f906caa71c-audit.json",
-  "files": [
-    {
-      "date": 1687167833847,
-      "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-19-15-success.log",
-      "hash": "393dc56989e7825e140215236ed4ecdc9a34a9a057bdba5c8c8cd1793a4336ae"
-    }
-  ],
-  "hashType": "sha256"
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\.4f110b3b4a617c2788dc9678c5d794f906caa71c-audit.json",
+    "files": [
+        {
+            "date": 1687167833847,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-19-15-success.log",
+            "hash": "393dc56989e7825e140215236ed4ecdc9a34a9a057bdba5c8c8cd1793a4336ae"
+        },
+        {
+            "date": 1687168870255,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-19-16-success.log",
+            "hash": "ee26ebe39126adce8323a923e55bbd1bbeb12cfef3e8b71db4fcb5512a5c58e0"
+        }
+    ],
+    "hashType": "sha256"
 }
