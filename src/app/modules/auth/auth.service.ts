@@ -58,19 +58,17 @@ const verifyOtp = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Expired verification code')
   }
 
-  // Schedule the code deletion using node-cron
-  cron.schedule(
-    `*/5 * * * *`,
-    async () => {
-      user.verificationCode = undefined
-      user.codeGenerationTimestamp = undefined
-      await user.save()
-    },
-    {
-      scheduled: true,
-      timezone: 'Asia/Dhaka',
+  // Schedule the code deletion using setTimeout()
+  setTimeout(async () => {
+    const updatedData = {
+      verificationCode: '',
+      codeGenerationTimestamp: '',
     }
-  )
+
+    await userModel.findOneAndUpdate({ email }, updatedData, {
+      new: true,
+    })
+  }, 5 * 60 * 1000)
 
   const accessToken = jwt.sign({ email }, config.access_token as string, {
     expiresIn: '1d',
