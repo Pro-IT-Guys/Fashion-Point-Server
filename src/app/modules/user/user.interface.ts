@@ -22,3 +22,7 @@ export interface IUser {
 export interface IUserModel extends Model<IUser> {
   findByEmail(email: string): Promise<IUser>
 }
+
+export interface IUserFilters {
+  searchTerm?: string
+}
