@@ -14,8 +14,9 @@ export interface IUser {
   role: USER_ROLE_ENUM
   address?: string
   shippingAddress?: string
-  verificationCode: string | undefined
-  codeGenerationTimestamp: string | undefined
+  verificationCode: string
+  codeGenerationTimestamp: string
+  isVerified: boolean
 }
 
 export interface IUserModel extends Model<IUser> {

@@ -36,6 +36,21 @@ const verifyOtp = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const resendOtp = catchAsync(async (req: Request, res: Response) => {
+  const { email } = req.body
+  const user = await AuthService.resendOtp(email)
+
+  const { accessToken } = user
+  res
+    .header('Authorization', `Bearer ${accessToken}`)
+    .header('Access-Control-Expose-Headers', 'Authorization')
+    .json({
+      message: 'Otp sent! Check your email for verification code',
+      success: true,
+      statusCode: httpStatus.OK,
+    })
+})
+
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const userData = req.body
   const user = await AuthService.loginUser(userData)
@@ -71,6 +86,7 @@ const loggedInUser = catchAsync(async (req: Request, res: Response) => {
 export const AuthController = {
   signupUser,
   verifyOtp,
+  resendOtp,
   loginUser,
   loggedInUser,
 }

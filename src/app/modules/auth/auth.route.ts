@@ -11,6 +11,7 @@ router.post(
   AuthController.signupUser
 )
 router.post('/verify', AuthController.verifyOtp)
+router.post('/resend_otp', AuthController.resendOtp)
 router.post('/login', AuthController.loginUser)
 router.get('/me', AuthController.loggedInUser)
 

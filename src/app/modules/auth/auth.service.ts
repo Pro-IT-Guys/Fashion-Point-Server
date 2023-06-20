@@ -24,7 +24,7 @@ const signupUser = async (userData: IUser): Promise<IUserResponse> => {
   const codeSent = sendEmail(email, subject, message)
 
   if (!codeSent)
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Code could not be sent')
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Otp code could not be sent')
 
   const hashedPassword = await hashPassword(password)
   const user = await userModel.create({
@@ -46,7 +46,7 @@ const verifyOtp = async (
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
 
   if (user.verificationCode !== verificationCode) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect verification code')
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect otp code')
   }
 
   const currentTimestamp = Date.now()
@@ -54,8 +54,17 @@ const verifyOtp = async (
   const elapsedTime = currentTimestamp - Number(generationTimestamp)
 
   if (elapsedTime > 5 * 60 * 1000) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Expired verification code')
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Expired otp code') // if otp code is expired use resend otp button in frontend
   }
+
+  const verified = await userModel.findOneAndUpdate(
+    { email },
+    { isVerified: true },
+    { new: true }
+  )
+
+  if (!verified)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Otp verification failed')
 
   // Schedule the code deletion using setTimeout()
   setTimeout(async () => {
@@ -69,6 +78,32 @@ const verifyOtp = async (
     })
   }, 5 * 60 * 1000)
 
+  const accessToken = jwt.sign({ email }, config.access_token as string, {
+    expiresIn: '1d',
+  })
+
+  return { accessToken, data: { role: user.role } }
+}
+
+const resendOtp = async (email: string): Promise<IUserResponse> => {
+  const verificationCode = generateRandomCode()
+  const codeGenerationTimestamp = Date.now()
+  const subject = 'Verify your email'
+  const message = `Your verification code is ${verificationCode}.\nThis code will expire in 5 minutes.\nDon't share it with anyone`
+  const codeSent = sendEmail(email, subject, message)
+
+  if (!codeSent)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Otp code could not be sent')
+
+  const updatedData = {
+    verificationCode,
+    codeGenerationTimestamp,
+  }
+
+  const user = await userModel.findOneAndUpdate({ email }, updatedData, {
+    new: true,
+  })
+  if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'User creation failed')
   const accessToken = jwt.sign({ email }, config.access_token as string, {
     expiresIn: '1d',
   })
@@ -110,6 +145,7 @@ const loggedInUser = async (token: string): Promise<IUser> => {
 export const AuthService = {
   signupUser,
   verifyOtp,
+  resendOtp,
   loginUser,
   loggedInUser,
 }
