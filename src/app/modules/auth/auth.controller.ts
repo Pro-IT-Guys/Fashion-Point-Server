@@ -14,7 +14,7 @@ const signupUser = catchAsync(async (req: Request, res: Response) => {
     .header('Authorization', `Bearer ${accessToken}`)
     .header('Access-Control-Expose-Headers', 'Authorization')
     .json({
-      message: 'Check your email for verification code',
+      message: 'Otp sent! Check your email for verification code',
       success: true,
       statusCode: httpStatus.CREATED,
     })
@@ -29,7 +29,7 @@ const verifyOtp = catchAsync(async (req: Request, res: Response) => {
     .header('Authorization', `Bearer ${accessToken}`)
     .header('Access-Control-Expose-Headers', 'Authorization')
     .json({
-      message: 'User verified successfully',
+      message: 'Otp verified successfully',
       data,
       success: true,
       statusCode: httpStatus.OK,

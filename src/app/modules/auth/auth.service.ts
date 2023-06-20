@@ -1,5 +1,4 @@
 import httpStatus from 'http-status'
-import cron from 'node-cron'
 import jwt from 'jsonwebtoken'
 import ApiError from '../../../errors/ApiError'
 import hashPassword from '../../helpers/hashPassword'
