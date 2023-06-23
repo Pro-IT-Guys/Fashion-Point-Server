@@ -35,10 +35,33 @@ const createProduct = async (productData: IProduct): Promise<IProduct> => {
   return product
 }
 
-// const updateProduct = async (
-//   productData: Partial<IProduct>
-// ): Promise<IProduct> => {}
+const updateProduct = async (
+  productId: string,
+  productData: Partial<IProduct>
+): Promise<IProduct> => {
+  const isExist = await productModel.findOne({ _id: productId })
+  if (!isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
+
+  const product = await productModel
+    .findOneAndUpdate({ _id: productId }, productData, {
+      new: true,
+    })
+    .populate([
+      {
+        path: 'brand',
+      },
+      {
+        path: 'type',
+      },
+    ])
+
+  if (!product)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Product update failed')
+
+  return product
+}
 
 export const ProductService = {
   createProduct,
+  updateProduct,
 }

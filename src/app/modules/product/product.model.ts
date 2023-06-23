@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { IProduct, IProductModel } from './product.interface'
+import ApiError from '../../../errors/ApiError'
+import httpStatus from 'http-status'
 
 const productSchema = new Schema<IProduct>(
   {
@@ -80,6 +82,21 @@ const productSchema = new Schema<IProduct>(
     timestamps: true,
   }
 )
+
+productSchema.pre('findOneAndUpdate', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const product = this as any
+
+  const samePath = await productModel.findOne({
+    path: product._update.path,
+  })
+
+  if (samePath) {
+    throw new ApiError(httpStatus.CONFLICT, 'Product path already exists')
+  }
+
+  next()
+})
 
 const productModel = model<IProduct, IProductModel>('Product', productSchema)
 
