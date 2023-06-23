@@ -23,3 +23,7 @@ export interface IProductModel extends Model<IProduct> {
   // eslint-disable-next-line no-unused-vars
   getProductById(id: string): Promise<IProduct>
 }
+
+export interface IProductFilters {
+  searchTerm?: string
+}

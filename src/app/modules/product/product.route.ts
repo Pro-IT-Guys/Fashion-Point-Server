@@ -10,6 +10,7 @@ router.post(
   validateRequest(ProductValidation.createProductZodSchema),
   ProductController.createProduct
 )
+router.get('/', ProductController.getAllProduct)
 router.patch('/:id', ProductController.updateProduct)
 
 export const ProductRoute = router

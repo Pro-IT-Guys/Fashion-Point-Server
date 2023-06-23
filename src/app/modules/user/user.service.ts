@@ -12,7 +12,7 @@ const getAllUsers = async (
   filters: IUserFilters,
   paginationOption: IPaginationOption
 ): Promise<IGenericDataWithMeta<IUser[]>> => {
-  const { searchTerm, ...searchFields } = filters
+  const { searchTerm, ...filterFields } = filters
 
   // Need update here, search by name is not working as name is a embeded field--------->
 
@@ -25,9 +25,9 @@ const getAllUsers = async (
     })
   }
 
-  if (Object.keys(searchFields).length) {
+  if (Object.keys(filterFields).length) {
     andConditions.push({
-      $and: Object.entries(searchFields).map(([key, value]) => ({
+      $and: Object.entries(filterFields).map(([key, value]) => ({
         [key]: value,
       })),
     })
