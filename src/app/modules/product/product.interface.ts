@@ -3,6 +3,7 @@ import { Model, Schema } from 'mongoose'
 export interface IProduct {
   name: string
   path: string
+  sku: string
   image: string[]
   buyingPrice: number
   sellingPrice: number

@@ -2,6 +2,7 @@ import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
 import { IProduct } from './product.interface'
 import productModel from './product.model'
+import generateUniqueSKU from '../../helpers/generateUniqueSKU'
 
 const createProduct = async (productData: IProduct): Promise<IProduct> => {
   const isExist = await productModel.findOne({ path: productData.path })
@@ -9,7 +10,17 @@ const createProduct = async (productData: IProduct): Promise<IProduct> => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product already exist')
   }
 
-  const product = (await productModel.create(productData)).populate([
+  let sku = generateUniqueSKU(6)
+  while (await productModel.findOne({ sku })) {
+    sku = generateUniqueSKU(6) // Check if the generated SKU already exists in the database. If it does, generate a new one.
+  }
+
+  const product = (
+    await productModel.create({
+      ...productData,
+      sku,
+    })
+  ).populate([
     {
       path: 'brand',
     },
@@ -23,6 +34,10 @@ const createProduct = async (productData: IProduct): Promise<IProduct> => {
 
   return product
 }
+
+// const updateProduct = async (
+//   productData: Partial<IProduct>
+// ): Promise<IProduct> => {}
 
 export const ProductService = {
   createProduct,

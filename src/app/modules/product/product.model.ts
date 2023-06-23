@@ -14,6 +14,11 @@ const productSchema = new Schema<IProduct>(
       lowercase: true,
       unique: true,
     },
+    sku: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     image: {
       type: [String],
       required: true,
