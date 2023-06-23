@@ -1,6 +1,8 @@
 import express from 'express'
 import { UserRoute } from '../modules/user/user.route'
 import { AuthRoute } from '../modules/auth/auth.route'
+import { BrandRoute } from '../modules/productBrand/brand.route'
+import { TypeRoute } from '../modules/productType/type.route'
 
 const router = express.Router()
 
@@ -12,6 +14,14 @@ const routes = [
   {
     path: '/users',
     route: UserRoute,
+  },
+  {
+    path: '/brand',
+    route: BrandRoute,
+  },
+  {
+    path: '/type',
+    route: TypeRoute,
   },
 ]
 
