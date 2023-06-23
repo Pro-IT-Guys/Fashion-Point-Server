@@ -10,5 +10,6 @@ router.post(
   validateRequest(ProductValidation.createProductZodSchema),
   ProductController.createProduct
 )
+router.patch('/:id', ProductController.updateProduct)
 
 export const ProductRoute = router
