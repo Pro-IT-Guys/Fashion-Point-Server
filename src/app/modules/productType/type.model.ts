@@ -12,6 +12,6 @@ const typeSchema = new Schema<IType>(
   { timestamps: true }
 )
 
-const typeModel = model<IType, ITypeModel>('Brand', typeSchema)
+const typeModel = model<IType, ITypeModel>('ProductType', typeSchema)
 
 export default typeModel

@@ -4,6 +4,7 @@ import { BrandService } from './brand.service'
 import { sendSuccessResponse } from '../../../shared/customResponse'
 
 const createBrand = catchAsync(async (req: Request, res: Response) => {
+  const brandData = req.body
   const brand = await BrandService.createBrand(req.body)
 
   const responseData = {

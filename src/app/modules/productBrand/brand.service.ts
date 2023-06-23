@@ -4,7 +4,8 @@ import { IBrand } from './brand.interface'
 import brandModel from './brand.model'
 
 const createBrand = async (brandData: IBrand): Promise<IBrand> => {
-  const isExist = await brandModel.findOne({ name: brandData })
+  const { name } = brandData
+  const isExist = await brandModel.findOne({ name })
   if (isExist) {
     throw new ApiError(httpStatus.CONFLICT, 'Brand already exists')
   }

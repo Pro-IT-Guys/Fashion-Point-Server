@@ -3,6 +3,7 @@ import { UserRoute } from '../modules/user/user.route'
 import { AuthRoute } from '../modules/auth/auth.route'
 import { BrandRoute } from '../modules/productBrand/brand.route'
 import { TypeRoute } from '../modules/productType/type.route'
+import { ProductRoute } from '../modules/product/product.route'
 
 const router = express.Router()
 
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/type',
     route: TypeRoute,
+  },
+  {
+    path: '/product',
+    route: ProductRoute,
   },
 ]
 

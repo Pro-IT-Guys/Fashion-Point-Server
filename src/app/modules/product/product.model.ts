@@ -35,8 +35,6 @@ const productSchema = new Schema<IProduct>(
     metaDescription: {
       type: String,
       required: true,
-      minlength: 10,
-      maxlength: 1000,
     },
     quantity: {
       type: Number,

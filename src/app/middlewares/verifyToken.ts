@@ -17,11 +17,12 @@ export default async function verifyToken(
   next: NextFunction
 ): Promise<void> {
   const token = req.headers.authorization?.split(' ')[1] || ''
-  if (!token) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Token not found')
-  }
 
   try {
+    if (!token) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Token not found')
+    }
+
     const decoded = jwt.verify(
       token,
       config.access_token as string

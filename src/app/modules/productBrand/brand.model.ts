@@ -12,6 +12,6 @@ const brandSchema = new Schema<IBrand>(
   { timestamps: true }
 )
 
-const brandModel = model<IBrand, IBrandModel>('Brand', brandSchema)
+const brandModel = model<IBrand, IBrandModel>('ProductBrand', brandSchema)
 
 export default brandModel

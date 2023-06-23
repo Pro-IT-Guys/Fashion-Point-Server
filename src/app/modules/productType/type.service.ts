@@ -4,7 +4,8 @@ import typeModel from './type.model'
 import { IType } from './type.interface'
 
 const createType = async (typeData: IType): Promise<IType> => {
-  const isExist = await typeModel.findOne({ name: typeData })
+  const { name } = typeData
+  const isExist = await typeModel.findOne({ name })
   if (isExist) {
     throw new ApiError(httpStatus.CONFLICT, 'Product type already exists')
   }

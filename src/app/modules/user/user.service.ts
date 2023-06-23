@@ -14,6 +14,8 @@ const getAllUsers = async (
 ): Promise<IGenericDataWithMeta<IUser[]>> => {
   const { searchTerm, ...searchFields } = filters
 
+  // Need update here, search by name is not working as name is a embeded field--------->
+
   const andConditions = []
   if (searchTerm) {
     andConditions.push({

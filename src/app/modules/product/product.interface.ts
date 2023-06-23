@@ -10,7 +10,7 @@ export interface IProduct {
   metaDescription: string
   quantity: number
   category: string
-  color: string[]
+  color: string[] // color code hex
   size: string[]
   tag: string[]
   brand: Schema.Types.ObjectId // productBrand id ref
