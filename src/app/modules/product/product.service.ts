@@ -9,7 +9,9 @@ const createProduct = async (productData: IProduct): Promise<IProduct> => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product already exist')
   }
 
-  const product = await productModel.create(productData)
+  const product = (
+    await (await productModel.create(productData)).populate('brand')
+  ).populate('type')
   if (!product)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product creation failed')
 
