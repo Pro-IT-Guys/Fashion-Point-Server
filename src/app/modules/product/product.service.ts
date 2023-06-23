@@ -160,8 +160,8 @@ const getAllProduct = async (
 
   const result = await productModel
     .find(whereCondition)
-    .populate('brand', 'name') // Populate brand field and select only the name field
-    .populate('type', 'name') // Populate type field and select only the name field
+    .populate('brand', 'name')
+    .populate('type', 'name')
     .sort(sortCondition)
     .skip(skip)
     .limit(limit as number)
