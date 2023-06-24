@@ -8,21 +8,7 @@ import { PRODUCT_FILTER_FIELDS } from './product.constant'
 import { IPaginationOption } from '../../../interfaces/sharedInterface'
 import { paginationFields } from '../../../constant/shared.constant'
 import httpStatus from 'http-status'
-
-const convertToWebP = (filename: string | undefined): string => {
-  if (!filename) {
-    throw new Error('Invalid filename')
-  }
-
-  const extension = filename.split('.').pop()?.toLowerCase()
-  if (!extension) {
-    throw new Error('Invalid file extension')
-  }
-
-  const filenameWithoutExtension = filename.replace(`.${extension}`, '')
-
-  return `${filenameWithoutExtension}.webp`
-}
+import convertToWebP from '../../helpers/convertImageToWebp'
 
 const createProduct = async (req: Request, res: Response) => {
   const productData = req.body
