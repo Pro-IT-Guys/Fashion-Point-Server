@@ -10,6 +10,9 @@ import httpStatus from 'http-status'
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const productData = req.body
+  const uploadedFile = req.file
+
+  console.log(uploadedFile, '====================')
 
   const product = await ProductService.createProduct(productData)
   const responseData = {
