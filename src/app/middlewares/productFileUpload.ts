@@ -43,6 +43,7 @@ import { Request, Response, NextFunction } from 'express'
 import multer from 'multer'
 import sharp from 'sharp'
 import path from 'path'
+import fs from 'fs'
 
 const storage = multer.diskStorage({
   destination: 'dist/public/images/product',
@@ -81,6 +82,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
         `${path.basename(frontImagePath, path.extname(frontImagePath))}.webp`
       )
       await sharp(frontImagePath).toFormat('webp').toFile(frontImageWebPPath)
+
+      // Remove original frontImage
+      fs.unlinkSync(frontImagePath)
     }
 
     // Convert backImage to WebP
@@ -92,6 +96,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
         `${path.basename(backImagePath, path.extname(backImagePath))}.webp`
       )
       await sharp(backImagePath).toFormat('webp').toFile(backImageWebPPath)
+
+      // Remove original backImage
+      fs.unlinkSync(backImagePath)
     }
 
     // Convert restImage files to WebP
@@ -105,6 +112,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
             `${path.basename(restImagePath, path.extname(restImagePath))}.webp`
           )
           await sharp(restImagePath).toFormat('webp').toFile(restImageWebPPath)
+
+          // Remove original restImage
+          fs.unlinkSync(restImagePath)
         })
       )
     }
