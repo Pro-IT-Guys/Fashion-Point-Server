@@ -14,6 +14,8 @@ const createProduct = async (req: Request, res: Response) => {
   const productData = req.body
   const uploadedFiles = req.files as any
 
+  console.log('reached here in controller')
+
   if (Object.keys(uploadedFiles).length !== 0) {
     const frontImageWebP = uploadedFiles.frontImage.map(
       (file: any) => `${convertToWebP(file.filename)}`

@@ -124,6 +124,16 @@
             "date": 1687629624202,
             "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-00-error.log",
             "hash": "c9d22f707662a7209401ea837b8d310ac118ba607adb7a5acbaf4a8aaaee9e69"
+        },
+        {
+            "date": 1687634303369,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-01-error.log",
+            "hash": "29ca75830272e1c283fbfd6a41dbef5c56738bfffc9820c7e26c0f720a38a7e5"
+        },
+        {
+            "date": 1687637026142,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-02-error.log",
+            "hash": "c045df33f151f6879d96ccbc8f0be9fc44ce0f18536e6edc7ad5f0452d384884"
         }
     ],
     "hashType": "sha256"

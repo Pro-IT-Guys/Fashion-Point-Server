@@ -14,11 +14,6 @@ import brandModel from '../productBrand/brand.model'
 import typeModel from '../productType/type.model'
 
 const createProduct = async (productData: IProduct): Promise<IProduct> => {
-  const isExist = await productModel.findOne({ path: productData.path })
-  if (isExist) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Product already exist')
-  }
-
   let sku = generateUniqueSKU(6)
   while (await productModel.findOne({ sku })) {
     sku = generateUniqueSKU(6) // Check if the generated SKU already exists in the database. If it does, generate a new one.
@@ -52,9 +47,7 @@ const updateProduct = async (
   if (!isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
 
   const product = await productModel
-    .findOneAndUpdate({ _id: productId }, productData, {
-      new: true,
-    })
+    .findOneAndUpdate({ _id: productId }, productData, { new: true })
     .populate([
       {
         path: 'brand',

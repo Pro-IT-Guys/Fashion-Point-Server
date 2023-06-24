@@ -25,6 +25,11 @@ app.get('/', async (req, res, next) => {
   sendSuccessResponse(res, responseData)
 })
 
+// All routes here
+app.use('/api/v1', routes)
+// Global error handler
+app.use(globalErrorHandler)
+
 // Serve static files
 app.use(
   '/images/product',
@@ -47,11 +52,6 @@ app.get('/images/product/:filename', (req, res) => {
   )
   res.sendFile(imagePath)
 })
-
-// All routes here
-app.use('/api/v1', routes)
-// Global error handler
-app.use(globalErrorHandler)
 
 // Forbidden routes
 app.all('*', (req, res, next) => {

@@ -124,6 +124,16 @@
             "date": 1687629624198,
             "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-25-00-success.log",
             "hash": "472b176775490a573a0aa767caace8d33432e533334dfb7cbe33cc0d9031ba50"
+        },
+        {
+            "date": 1687634303365,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-25-01-success.log",
+            "hash": "79de18ede6caed5bc9a2a91d81a97d02c77ebd0fe9fdf84e40e85edc948f1dfc"
+        },
+        {
+            "date": 1687637026138,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-25-02-success.log",
+            "hash": "67c0a427ba92b9b1d94b97e0be776e4cfd9eef02af5c095f8cfcdb0a2d03008c"
         }
     ],
     "hashType": "sha256"

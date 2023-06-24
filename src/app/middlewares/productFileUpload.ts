@@ -59,7 +59,7 @@ const storage = multer.diskStorage({
 })
 
 const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const maxSize = 2 * 1024 * 1024 // 2MB
+  const maxSize = 4 * 1024 * 1024 // 4MB
 
   const upload = multer({
     storage,
@@ -87,7 +87,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const uploadedFiles = req.files as any
 
     // Convert frontImage to WebP
-    if (uploadedFiles.frontImage) {
+    if (uploadedFiles?.frontImage) {
       const frontImage = uploadedFiles.frontImage[0]
       const frontImagePath = frontImage.path
       const frontImageWebPPath = path.join(
@@ -101,7 +101,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
     }
 
     // Convert backImage to WebP
-    if (uploadedFiles.backImage) {
+    if (uploadedFiles?.backImage) {
       const backImage = uploadedFiles.backImage[0]
       const backImagePath = backImage.path
       const backImageWebPPath = path.join(
@@ -131,7 +131,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
         })
       )
     }
-
+    console.log('calling next from uploadMiddleware')
     next()
   })
 }
