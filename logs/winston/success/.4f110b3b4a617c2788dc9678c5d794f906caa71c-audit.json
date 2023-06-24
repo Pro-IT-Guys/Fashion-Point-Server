@@ -104,6 +104,11 @@
             "date": 1687597201752,
             "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-24-15-success.log",
             "hash": "38d06138518e64527bfe6a6d831c3f8c6f9c14b5c73fd8bebee368576f7f7313"
+        },
+        {
+            "date": 1687619535797,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-24-21-success.log",
+            "hash": "b8f40df4a42d2efe2fa4d2ed673707b69d745a9ff8a8ed73a1dc3005a223b1ab"
         }
     ],
     "hashType": "sha256"
