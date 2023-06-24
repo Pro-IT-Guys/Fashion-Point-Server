@@ -9,6 +9,21 @@ import { IPaginationOption } from '../../../interfaces/sharedInterface'
 import { paginationFields } from '../../../constant/shared.constant'
 import httpStatus from 'http-status'
 
+const convertToWebP = (filename: string | undefined): string => {
+  if (!filename) {
+    throw new Error('Invalid filename')
+  }
+
+  const extension = filename.split('.').pop()?.toLowerCase()
+  if (!extension) {
+    throw new Error('Invalid file extension')
+  }
+
+  const filenameWithoutExtension = filename.replace(`.${extension}`, '')
+
+  return `${filenameWithoutExtension}.webp`
+}
+
 const createProduct = async (req: Request, res: Response) => {
   console.log('controller');
   const productData = req.body
@@ -16,21 +31,19 @@ const createProduct = async (req: Request, res: Response) => {
 
   if (Object.keys(uploadedFiles).length !== 0) {
     const frontImageWebP = uploadedFiles.frontImage.map(
-      (file: any) => `${file.filename}.webp`
+      (file: any) => `${convertToWebP(file.filename)}`
     )
     const backImageWebP = uploadedFiles.backImage.map(
-      (file: any) => `${file.filename}.webp`
+      (file: any) => `${convertToWebP(file.filename)}`
     )
     const restImageWebP = uploadedFiles.restImage.map(
-      (file: any) => `${file.filename}.webp`
+      (file: any) => `${convertToWebP(file.filename)}`
     )
 
     productData.frontImage = frontImageWebP[0]
     productData.backImage = backImageWebP[0]
     productData.restImage = restImageWebP
   }
-
-  console.log('productData', productData)
 
   const product = await ProductService.createProduct(productData)
   const responseData = {
@@ -40,7 +53,6 @@ const createProduct = async (req: Request, res: Response) => {
 
   sendSuccessResponse(res, responseData)
 }
-
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id
   const productData = req.body

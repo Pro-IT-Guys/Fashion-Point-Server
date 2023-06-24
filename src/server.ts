@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import mongoose from 'mongoose'
 import app from './app'
 import config from './config'
@@ -39,10 +40,18 @@ process.on('SIGTERM', () => {
 async function databaseConnection() {
   try {
     await mongoose.connect(config.database_string as string)
-    successLogger.info('Database connected successfully')
+    if (config.env === 'development') {
+      console.log('Database connected successfully')
+    } else {
+      successLogger.info('Database connected successfully')
+    }
 
     server = app.listen(config.port, () => {
-      successLogger.info(`Server is listening on port ${config.port}`)
+      if (config.env === 'development') {
+        console.log(`Server is listening on port ${config.port}`)
+      } else {
+        successLogger.info(`Server is listening on port ${config.port}`)
+      }
     })
   } catch (error) {
     errorLogger.error('Error while connecting database: ', error)
