@@ -14,6 +14,7 @@ import brandModel from '../productBrand/brand.model'
 import typeModel from '../productType/type.model'
 
 const createProduct = async (productData: IProduct): Promise<IProduct> => {
+  console.log(productData)
   const isExist = await productModel.findOne({ path: productData.path })
   if (isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product already exist')

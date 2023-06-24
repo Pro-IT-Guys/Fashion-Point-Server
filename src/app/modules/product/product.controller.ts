@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express'
 import catchAsync from '../../../shared/catchAsync'
 import { ProductService } from './product.service'
@@ -8,11 +9,21 @@ import { IPaginationOption } from '../../../interfaces/sharedInterface'
 import { paginationFields } from '../../../constant/shared.constant'
 import httpStatus from 'http-status'
 
-const createProduct = catchAsync(async (req: Request, res: Response) => {
+const createProduct = async (req: Request, res: Response) => {
   const productData = req.body
-  const uploadedFile = req.file
+  const uploadedFiles = req.files as any
 
-  console.log(uploadedFile, '====================')
+  if (Object.keys(uploadedFiles).length !== 0) {
+    const frontImage = uploadedFiles.frontImage.map(
+      (file: any) => file.filename
+    )
+    const backImage = uploadedFiles.backImage.map((file: any) => file.filename)
+    const restImage = uploadedFiles.restImage.map((file: any) => file.filename)
+
+    productData.frontImage = frontImage[0]
+    productData.backImage = backImage[0]
+    productData.restImage = restImage
+  }
 
   const product = await ProductService.createProduct(productData)
   const responseData = {
@@ -21,7 +32,7 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
   }
 
   sendSuccessResponse(res, responseData)
-})
+}
 
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id
