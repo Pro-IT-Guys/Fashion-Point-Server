@@ -15,6 +15,7 @@ const productSchema = new Schema<IProduct>(
       trim: true,
       lowercase: true,
       unique: true,
+      index: true,
     },
     sku: {
       type: String,

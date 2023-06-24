@@ -14,7 +14,6 @@ import brandModel from '../productBrand/brand.model'
 import typeModel from '../productType/type.model'
 
 const createProduct = async (productData: IProduct): Promise<IProduct> => {
-  console.log(productData)
   const isExist = await productModel.findOne({ path: productData.path })
   if (isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product already exist')
@@ -180,8 +179,36 @@ const getAllProduct = async (
   return responseData
 }
 
+const getProductById = async (productId: string): Promise<IProduct> => {
+  const product = await productModel.findOne({ _id: productId }).populate([
+    {
+      path: 'brand',
+    },
+    {
+      path: 'type',
+    },
+  ])
+
+  if (!product) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
+
+  return product
+}
+
+const getProductByPath = async (path: string): Promise<IProduct> => {
+  // for fast query make path as index in product model
+
+  const product = await productModel
+    .findOne({ path })
+    .populate([{ path: 'brand' }, { path: 'type' }])
+
+  if (!product) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
+  return product
+}
+
 export const ProductService = {
   createProduct,
   updateProduct,
   getAllProduct,
+  getProductById,
+  getProductByPath,
 }
