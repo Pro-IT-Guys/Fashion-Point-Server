@@ -14,11 +14,9 @@ const createProductZodSchema = z.object({
       })
       .trim()
       .toLowerCase(),
-    image: z.array(
-      z.string({
-        required_error: 'Image is required',
-      })
-    ),
+    frontImage: z.string().optional(),
+    backImage: z.string().optional(),
+    restImage: z.array(z.string()).optional(),
     buyingPrice: z.number({
       required_error: 'Buying price is required',
     }),
