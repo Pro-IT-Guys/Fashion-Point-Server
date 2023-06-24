@@ -12,6 +12,8 @@ router.post(
   uploadMiddleware,
   ProductController.createProduct
 )
+router.get('/:id', ProductController.getProductById)
+router.get('/path/:path', ProductController.getProductByPath)
 router.get('/', ProductController.getAllProduct)
 router.patch('/:id', ProductController.updateProduct)
 

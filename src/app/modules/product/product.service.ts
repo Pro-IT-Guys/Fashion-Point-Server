@@ -195,8 +195,6 @@ const getProductById = async (productId: string): Promise<IProduct> => {
 }
 
 const getProductByPath = async (path: string): Promise<IProduct> => {
-  // for fast query make path as index in product model
-
   const product = await productModel
     .findOne({ path })
     .populate([{ path: 'brand' }, { path: 'type' }])
