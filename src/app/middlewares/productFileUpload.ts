@@ -46,7 +46,7 @@ import path from 'path'
 import fs from 'fs'
 
 const storage = multer.diskStorage({
-  destination: 'dist/public/images/product',
+  destination: 'dist/public/images/product/',
   filename: (
     req: Request,
     file: any,
@@ -59,13 +59,26 @@ const storage = multer.diskStorage({
 })
 
 const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const upload = multer({ storage }).fields([
+  const maxSize = 2 * 1024 * 1024 // 2MB
+
+  const upload = multer({
+    storage,
+    limits: {
+      fileSize: maxSize,
+    },
+  }).fields([
     { name: 'frontImage', maxCount: 1 },
     { name: 'backImage', maxCount: 1 },
     { name: 'restImage', maxCount: 10 },
   ])
 
   upload(req, res, async error => {
+    if (error instanceof multer.MulterError) {
+      if (error.code === 'LIMIT_FILE_SIZE') {
+        error.message = 'File size exceeds the allowed limit of 2MB.'
+      }
+    }
+
     if (error) {
       next(error)
       return

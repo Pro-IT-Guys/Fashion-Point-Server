@@ -1,25 +1,25 @@
 {
-    "keep": {
-        "days": true,
-        "amount": 14
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\.28ed9829e81f24ac31dd28f15f8d4678610a79e1-audit.json",
+  "files": [
+    {
+      "date": 1687618712578,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-24-20-error.log",
+      "hash": "711e65ae8cc90e1abefe4fedc0ae807f9ba383f61278527f322e770e211d2769"
     },
-    "auditLog": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\.28ed9829e81f24ac31dd28f15f8d4678610a79e1-audit.json",
-    "files": [
-        {
-            "date": 1687618712578,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-24-20-error.log",
-            "hash": "711e65ae8cc90e1abefe4fedc0ae807f9ba383f61278527f322e770e211d2769"
-        },
-        {
-            "date": 1687619849012,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-24-21-error.log",
-            "hash": "9b127f85887e77ed0574509cfe5118aa382635c05ca0688a1dac3caa58ca309b"
-        },
-        {
-            "date": 1687622432863,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-24-22-error.log",
-            "hash": "4250b6bd1ccb445f9d02b11ab45d3baef8742f1babe30285f8c08a80339903ee"
-        }
-    ],
-    "hashType": "sha256"
+    {
+      "date": 1687619849012,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-24-21-error.log",
+      "hash": "9b127f85887e77ed0574509cfe5118aa382635c05ca0688a1dac3caa58ca309b"
+    },
+    {
+      "date": 1687622432863,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-24-22-error.log",
+      "hash": "4250b6bd1ccb445f9d02b11ab45d3baef8742f1babe30285f8c08a80339903ee"
+    }
+  ],
+  "hashType": "sha256"
 }

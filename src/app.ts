@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { Application } from 'express'
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
@@ -48,7 +50,6 @@ app.get('/images/product/:filename', (req, res) => {
 
 // All routes here
 app.use('/api/v1', routes)
-
 // Global error handler
 app.use(globalErrorHandler)
 
