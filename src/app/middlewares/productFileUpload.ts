@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 // This is for without converting to WebP
 
@@ -44,6 +45,34 @@ import multer from 'multer'
 import sharp from 'sharp'
 import path from 'path'
 import fs from 'fs'
+
+function deleteFileWithRetry(
+  filePath: string,
+  maxRetries: number,
+  delay: number
+) {
+  let retries = 0
+
+  function attemptDeletion() {
+    fs.unlink(filePath, error => {
+      if (error) {
+        if (error.code === 'EBUSY' && retries < maxRetries) {
+          console.log(
+            `File is busy or locked. Retrying deletion in ${delay}ms...`
+          )
+          retries++
+          setTimeout(attemptDeletion, delay)
+        } else {
+          console.error(`Failed to delete file: ${error.message}`)
+        }
+      } else {
+        console.log(`File deleted successfully: ${filePath}`)
+      }
+    })
+  }
+
+  attemptDeletion()
+}
 
 const storage = multer.diskStorage({
   destination: 'dist/public/images/product/',
@@ -97,7 +126,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
       await sharp(frontImagePath).toFormat('webp').toFile(frontImageWebPPath)
 
       // Remove original frontImage
-      fs.unlinkSync(frontImagePath)
+      setTimeout(() => {
+        deleteFileWithRetry(frontImagePath, 3, 3000)
+      }, 5000)
     }
 
     // Convert backImage to WebP
@@ -111,7 +142,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
       await sharp(backImagePath).toFormat('webp').toFile(backImageWebPPath)
 
       // Remove original backImage
-      fs.unlinkSync(backImagePath)
+      setTimeout(() => {
+        deleteFileWithRetry(backImagePath, 3, 3000)
+      }, 5000)
     }
 
     // Convert restImage files to WebP
@@ -127,11 +160,12 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
           await sharp(restImagePath).toFormat('webp').toFile(restImageWebPPath)
 
           // Remove original restImage
-          fs.unlinkSync(restImagePath)
+          setTimeout(() => {
+            deleteFileWithRetry(restImagePath, 3, 3000)
+          }, 5000)
         })
       )
     }
-    console.log('calling next from uploadMiddleware')
     next()
   })
 }
