@@ -14,8 +14,6 @@ const createProduct = async (req: Request, res: Response) => {
   const productData = req.body
   const uploadedFiles = req.files as any
 
-  console.log('reached here in controller')
-
   if (Object.keys(uploadedFiles).length !== 0) {
     const frontImageWebP = uploadedFiles.frontImage.map(
       (file: any) => `${convertToWebP(file.filename)}`
@@ -43,6 +41,30 @@ const createProduct = async (req: Request, res: Response) => {
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id
   const productData = req.body
+  const uploadedFiles = req.files as any
+
+  if (Object.keys(uploadedFiles).length !== 0) {
+    if (uploadedFiles.frontImage) {
+      const frontImageWebP = uploadedFiles.frontImage.map(
+        (file: any) => `${convertToWebP(file.filename)}`
+      )
+      productData.frontImage = frontImageWebP[0]
+    }
+
+    if (uploadedFiles.backImage) {
+      const backImageWebP = uploadedFiles.backImage.map(
+        (file: any) => `${convertToWebP(file.filename)}`
+      )
+      productData.backImage = backImageWebP[0]
+    }
+
+    if (uploadedFiles.restImage) {
+      const restImageWebP = uploadedFiles.restImage.map(
+        (file: any) => `${convertToWebP(file.filename)}`
+      )
+      productData.restImage = restImageWebP
+    }
+  }
 
   const product = await ProductService.updateProduct(productId, productData)
   const responseData = {

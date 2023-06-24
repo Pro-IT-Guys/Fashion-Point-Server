@@ -105,14 +105,15 @@ productSchema.pre('findOneAndUpdate', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const product = this as any
 
-  const samePath = await productModel.findOne({
-    path: product._update.path,
-  })
+  if (product._update?.path) {
+    const samePath = await productModel.findOne({
+      path: product._update?.path,
+    })
 
-  if (samePath) {
-    throw new ApiError(httpStatus.CONFLICT, 'Product path already exists')
+    if (samePath) {
+      throw new ApiError(httpStatus.CONFLICT, 'Product path already exists')
+    }
   }
-
   next()
 })
 

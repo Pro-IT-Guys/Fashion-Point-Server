@@ -1,2 +1,5 @@
 Sun Jun 25 2023 | 2:12:59 [Error Log] error: Product already exists
 Sun Jun 25 2023 | 2:32:37 [Error Log] error: Product already exists with same path! Please choose another path.
+Sun Jun 25 2023 | 2:41:0 [Error Log] error: EBUSY: resource busy or locked, unlink 'dist\public\images\product\1687639245306-381934079.jpg'
+Sun Jun 25 2023 | 2:42:0 [Error Log] error: EBUSY: resource busy or locked, unlink 'dist\public\images\product\1687639316253-993225391.jpg'
+Sun Jun 25 2023 | 2:43:38 [Error Log] error: EBUSY: resource busy or locked, unlink 'dist\public\images\product\1687639401951-498372955.jpg'
