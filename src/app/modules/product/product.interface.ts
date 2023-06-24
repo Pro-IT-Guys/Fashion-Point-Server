@@ -4,7 +4,9 @@ export interface IProduct {
   name: string
   path: string
   sku: string
-  image: string[]
+  frontImage: string
+  backImage: string
+  restImage?: string[]
   buyingPrice: number
   sellingPrice: number
   description: string

@@ -21,9 +21,16 @@ const productSchema = new Schema<IProduct>(
       required: true,
       unique: true,
     },
-    image: {
-      type: [String],
+    frontImage: {
+      type: String,
       required: true,
+    },
+    backImage: {
+      type: String,
+      required: true,
+    },
+    restImage: {
+      type: [String],
     },
     buyingPrice: {
       type: Number,

@@ -75,7 +75,7 @@ const getAllProduct = async (
   paginationOption: IPaginationOption
 ): Promise<IGenericDataWithMeta<IProduct[]>> => {
   const { searchTerm, ...filterFields } = filters
-
+  console.log(searchTerm)
   const andConditions = []
   if (searchTerm) {
     const brand = await brandModel.findOne(
