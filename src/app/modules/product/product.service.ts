@@ -203,10 +203,25 @@ const getProductByPath = async (path: string): Promise<IProduct> => {
   return product
 }
 
+const deleteProduct = async (productId: string): Promise<IProduct> => {
+  const product = await productModel.findOne({ _id: productId })
+  if (!product) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
+  }
+
+  const deletedProduct = await productModel.findByIdAndDelete(productId)
+  if (!deletedProduct) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Product deletion failed')
+  }
+
+  return deletedProduct
+}
+
 export const ProductService = {
   createProduct,
   updateProduct,
   getAllProduct,
   getProductById,
   getProductByPath,
+  deleteProduct,
 }

@@ -87,10 +87,23 @@ const getProductByPath = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const deleteProduct = catchAsync(async (req: Request, res: Response) => {
+  const productId = req.params.id
+
+  const product = await ProductService.deleteProduct(productId)
+  const responseData = {
+    message: 'Product deleted successfully',
+    data: product,
+  }
+
+  sendSuccessResponse(res, responseData)
+})
+
 export const ProductController = {
   createProduct,
   updateProduct,
   getAllProduct,
   getProductById,
   getProductByPath,
+  deleteProduct,
 }
