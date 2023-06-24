@@ -46,7 +46,8 @@ import path from 'path'
 import fs from 'fs'
 
 const storage = multer.diskStorage({
-  destination: 'dist/public/images/product',
+  // destination: 'dist/public/images/product/',
+  destination: 'images',
   filename: (
     req: Request,
     file: any,

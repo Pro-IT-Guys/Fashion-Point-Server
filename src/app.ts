@@ -4,6 +4,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import httpStatus from 'http-status'
 import { sendSuccessResponse } from './shared/customResponse'
 import  path = require('path');
+import bodyParser = require('body-parser');
 
 // Import routes
 import routes from './app/routes/index'
@@ -23,11 +24,14 @@ app.get('/', async (req, res, next) => {
   sendSuccessResponse(res, responseData)
 })
 
-app.use('/dist/public/images/product', express.static(path.join(__dirname, 'product')))
+app.use(bodyParser.json({limit:'50mb'}))
+app.use(bodyParser.urlencoded({limit:'50mb', extended:true}))
+
+app.use('/images', express.static(path.join(__dirname, 'images')))
+console.log(path.join(__dirname, 'images'));
 
 // All routes here
 app.use('/api/v1', routes)
-
 // Global error handler
 app.use(globalErrorHandler)
 
