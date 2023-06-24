@@ -14,16 +14,22 @@ const createProduct = async (req: Request, res: Response) => {
   const uploadedFiles = req.files as any
 
   if (Object.keys(uploadedFiles).length !== 0) {
-    const frontImage = uploadedFiles.frontImage.map(
-      (file: any) => file.filename
+    const frontImageWebP = uploadedFiles.frontImage.map(
+      (file: any) => `${file.filename}.webp`
     )
-    const backImage = uploadedFiles.backImage.map((file: any) => file.filename)
-    const restImage = uploadedFiles.restImage.map((file: any) => file.filename)
+    const backImageWebP = uploadedFiles.backImage.map(
+      (file: any) => `${file.filename}.webp`
+    )
+    const restImageWebP = uploadedFiles.restImage.map(
+      (file: any) => `${file.filename}.webp`
+    )
 
-    productData.frontImage = frontImage[0]
-    productData.backImage = backImage[0]
-    productData.restImage = restImage
+    productData.frontImage = frontImageWebP[0]
+    productData.backImage = backImageWebP[0]
+    productData.restImage = restImageWebP
   }
+
+  console.log('productData', productData)
 
   const product = await ProductService.createProduct(productData)
   const responseData = {
