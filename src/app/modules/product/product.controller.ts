@@ -11,7 +11,6 @@ import httpStatus from 'http-status'
 import convertToWebP from '../../helpers/convertImageToWebp'
 
 const createProduct = async (req: Request, res: Response) => {
-  console.log('controller');
   const productData = req.body
   const uploadedFiles = req.files as any
 

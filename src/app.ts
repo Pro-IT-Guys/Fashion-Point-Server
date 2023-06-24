@@ -3,7 +3,7 @@ import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import httpStatus from 'http-status'
 import { sendSuccessResponse } from './shared/customResponse'
-import  path = require('path');
+import path = require('path')
 
 // Import routes
 import routes from './app/routes/index'
@@ -23,7 +23,28 @@ app.get('/', async (req, res, next) => {
   sendSuccessResponse(res, responseData)
 })
 
-app.use('/dist/public/images/product', express.static(path.join(__dirname, 'product')))
+// Serve static files
+app.use(
+  '/images/product',
+  express.static(
+    path.join(__dirname, '..', 'dist', 'public', 'images', 'product')
+  )
+)
+
+// Define a route to handle the GET request for the images
+app.get('/images/product/:filename', (req, res) => {
+  const filename = req.params.filename
+  const imagePath = path.join(
+    __dirname,
+    '..',
+    'dist',
+    'public',
+    'images',
+    'product',
+    filename
+  )
+  res.sendFile(imagePath)
+})
 
 // All routes here
 app.use('/api/v1', routes)
