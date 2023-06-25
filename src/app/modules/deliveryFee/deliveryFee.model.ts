@@ -25,6 +25,10 @@ const stateSchema = new Schema<IState>(
       type: String,
       required: true,
     },
+    state_code: {
+      type: String,
+      required: true,
+    },
     cities: [citySchema],
     delivery_fee: {
       type: Number,

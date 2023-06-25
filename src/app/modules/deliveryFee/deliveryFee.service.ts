@@ -21,10 +21,18 @@ const CreateFee = async (): Promise<ICountry[]> => {
           city_name: city.name,
           delivery_fee,
         }))
-        states.push({ state_name: state.name, cities: stateCities })
+        states.push({
+          state_name: state.name,
+          state_code: state.isoCode,
+          cities: stateCities,
+        })
       } else {
         const delivery_fee = 10
-        states.push({ state_name: state.name, delivery_fee })
+        states.push({
+          state_name: state.name,
+          state_code: state.isoCode,
+          delivery_fee,
+        })
       }
     }
 
@@ -42,6 +50,101 @@ const CreateFee = async (): Promise<ICountry[]> => {
   return deliveryFeeData
 }
 
+const updateFee = async (
+  id: string,
+  dataPayload: {
+    state_code: string
+    city_name: string
+    delivery_fee: number
+  }
+): Promise<ICountry[]> => {
+  const { state_code, city_name, delivery_fee } = dataPayload
+
+  // Find the country and its corresponding states based on the provided id
+  const country = await deliveryFeeModel.findById(id)
+  if (!country) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Country not found')
+  }
+
+  // Find the matching state based on the provided state_code
+  const state = country.states.find(state => state.state_code === state_code)
+  if (!state) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'State not found')
+  }
+
+  // If city_name is provided, update the delivery_fee for the matching city
+  if (city_name) {
+    if (state.cities) {
+      const city = state.cities.find(city => city.city_name === city_name)
+      if (!city) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'City not found')
+      }
+      city.delivery_fee = delivery_fee
+
+      // Update the delivery_fee in the database
+      await deliveryFeeModel.findOneAndUpdate(
+        {
+          _id: id,
+          'states.state_code': state_code,
+          'states.cities.city_name': city_name,
+        },
+        {
+          $set: {
+            'states.$[outer].cities.$[inner].delivery_fee': delivery_fee,
+          },
+        },
+        {
+          arrayFilters: [
+            { 'outer.state_code': state_code },
+            { 'inner.city_name': city_name },
+          ],
+        }
+      )
+
+      // Return the delivery_fee and the updated city
+      return [
+        {
+          country: country.country,
+          country_code: country.country_code,
+          phoneCode: country.phoneCode,
+          states: [
+            {
+              state_name: state.state_name,
+              state_code: state.state_code,
+              cities: [city],
+            },
+          ],
+        },
+      ]
+    } else {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        'Cities not available for the state'
+      )
+    }
+  } else {
+    // If city_name is not provided, update the delivery_fee for the state
+    state.delivery_fee = delivery_fee
+
+    // Update the delivery_fee in the database
+    await deliveryFeeModel.findOneAndUpdate(
+      { _id: id, 'states.state_code': state_code },
+      { $set: { 'states.$.delivery_fee': delivery_fee } }
+    )
+
+    // Return the delivery_fee and the state
+    return [
+      {
+        country: country.country,
+        country_code: country.country_code,
+        phoneCode: country.phoneCode,
+        states: [state],
+      },
+    ]
+  }
+}
+
 export const DeliveryFeeService = {
   CreateFee,
+  updateFee,
 }

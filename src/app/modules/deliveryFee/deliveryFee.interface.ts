@@ -8,6 +8,7 @@ export interface ICity {
 
 export interface IState {
   state_name: string
+  state_code: string
   cities?: ICity[]
   delivery_fee?: number
 }

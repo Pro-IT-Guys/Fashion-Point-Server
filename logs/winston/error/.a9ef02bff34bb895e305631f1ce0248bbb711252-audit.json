@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\.a9ef02bff34bb895e305631f1ce0248bbb711252-audit.json",
+    "files": [
+        {
+            "date": 1687703035073,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-20-error.log",
+            "hash": "b766432ed4fef2e3447b2d1d35a1f6030ed6d7a532ed47ad3a4f2b20a4072da8"
+        }
+    ],
+    "hashType": "sha256"
+}
