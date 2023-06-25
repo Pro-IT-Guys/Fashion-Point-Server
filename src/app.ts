@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { Application } from 'express'
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import httpStatus from 'http-status'
 import { sendSuccessResponse } from './shared/customResponse'
-import  path = require('path');
-import bodyParser = require('body-parser');
+import path = require('path')
 
 // Import routes
 import routes from './app/routes/index'
@@ -24,16 +25,33 @@ app.get('/', async (req, res, next) => {
   sendSuccessResponse(res, responseData)
 })
 
-app.use(bodyParser.json({limit:'50mb'}))
-app.use(bodyParser.urlencoded({limit:'50mb', extended:true}))
-
-// app.use('/images', express.static(path.join(__dirname, 'images')))
-// console.log(path.join(__dirname, 'images'));
-
 // All routes here
 app.use('/api/v1', routes)
 // Global error handler
 app.use(globalErrorHandler)
+
+// Serve static files
+app.use(
+  '/images/product',
+  express.static(
+    path.join(__dirname, '..', 'dist', 'public', 'images', 'product')
+  )
+)
+
+// Define a route to handle the GET request for the images
+app.get('/images/product/:filename', (req, res) => {
+  const filename = req.params.filename
+  const imagePath = path.join(
+    __dirname,
+    '..',
+    'dist',
+    'public',
+    'images',
+    'product',
+    filename
+  )
+  res.sendFile(imagePath)
+})
 
 // Forbidden routes
 // app.all('*', (req, res, next) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 // This is for without converting to WebP
 
@@ -45,9 +46,36 @@ import sharp from 'sharp'
 import path from 'path'
 import fs from 'fs'
 
+function deleteFileWithRetry(
+  filePath: string,
+  maxRetries: number,
+  delay: number
+) {
+  let retries = 0
+
+  function attemptDeletion() {
+    fs.unlink(filePath, error => {
+      if (error) {
+        if (error.code === 'EBUSY' && retries < maxRetries) {
+          console.log(
+            `File is busy or locked. Retrying deletion in ${delay}ms...`
+          )
+          retries++
+          setTimeout(attemptDeletion, delay)
+        } else {
+          console.error(`Failed to delete file: ${error.message}`)
+        }
+      } else {
+        console.log(`File deleted successfully: ${filePath}`)
+      }
+    })
+  }
+
+  attemptDeletion()
+}
+
 const storage = multer.diskStorage({
-  // destination: 'dist/public/images/product/',
-  destination: 'images',
+  destination: 'dist/public/images/product/',
   filename: (
     req: Request,
     file: any,
@@ -60,13 +88,26 @@ const storage = multer.diskStorage({
 })
 
 const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const upload = multer({ storage }).fields([
+  const maxSize = 4 * 1024 * 1024 // 4MB
+
+  const upload = multer({
+    storage,
+    limits: {
+      fileSize: maxSize,
+    },
+  }).fields([
     { name: 'frontImage', maxCount: 1 },
     { name: 'backImage', maxCount: 1 },
     { name: 'restImage', maxCount: 10 },
   ])
 
   upload(req, res, async error => {
+    if (error instanceof multer.MulterError) {
+      if (error.code === 'LIMIT_FILE_SIZE') {
+        error.message = 'File size exceeds the allowed limit of 2MB.'
+      }
+    }
+
     if (error) {
       next(error)
       return
@@ -75,7 +116,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const uploadedFiles = req.files as any
 
     // Convert frontImage to WebP
-    if (uploadedFiles.frontImage) {
+    if (uploadedFiles?.frontImage) {
       const frontImage = uploadedFiles.frontImage[0]
       const frontImagePath = frontImage.path
       const frontImageWebPPath = path.join(
@@ -85,11 +126,13 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
       await sharp(frontImagePath).toFormat('webp').toFile(frontImageWebPPath)
 
       // Remove original frontImage
-      fs.unlinkSync(frontImagePath)
+      setTimeout(() => {
+        deleteFileWithRetry(frontImagePath, 3, 3000)
+      }, 5000)
     }
 
     // Convert backImage to WebP
-    if (uploadedFiles.backImage) {
+    if (uploadedFiles?.backImage) {
       const backImage = uploadedFiles.backImage[0]
       const backImagePath = backImage.path
       const backImageWebPPath = path.join(
@@ -99,7 +142,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
       await sharp(backImagePath).toFormat('webp').toFile(backImageWebPPath)
 
       // Remove original backImage
-      fs.unlinkSync(backImagePath)
+      setTimeout(() => {
+        deleteFileWithRetry(backImagePath, 3, 3000)
+      }, 5000)
     }
 
     // Convert restImage files to WebP
@@ -115,11 +160,12 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
           await sharp(restImagePath).toFormat('webp').toFile(restImageWebPPath)
 
           // Remove original restImage
-          fs.unlinkSync(restImagePath)
+          setTimeout(() => {
+            deleteFileWithRetry(restImagePath, 3, 3000)
+          }, 5000)
         })
       )
     }
-
     next()
   })
 }

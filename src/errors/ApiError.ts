@@ -7,7 +7,7 @@ class ApiError extends Error {
   ) {
     super(message)
     this.statusCode = statusCode
-
+    console.log('reached here in api error')
     if (stack) {
       this.stack = stack
     } else {

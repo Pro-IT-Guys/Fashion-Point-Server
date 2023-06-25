@@ -91,18 +91,29 @@ const productSchema = new Schema<IProduct>(
   }
 )
 
+productSchema.pre('save', async function (next) {
+  const product = this as IProduct
+  const isExist = await productModel.findOne({ path: product.path }).exec()
+
+  if (isExist !== null && Object.keys(isExist).length !== 0) {
+    throw new ApiError(httpStatus.CONFLICT, 'Product path already exists')
+  }
+  next()
+})
+
 productSchema.pre('findOneAndUpdate', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const product = this as any
 
-  const samePath = await productModel.findOne({
-    path: product._update.path,
-  })
+  if (product._update?.path) {
+    const samePath = await productModel.findOne({
+      path: product._update?.path,
+    })
 
-  if (samePath) {
-    throw new ApiError(httpStatus.CONFLICT, 'Product path already exists')
+    if (samePath) {
+      throw new ApiError(httpStatus.CONFLICT, 'Product path already exists')
+    }
   }
-
   next()
 })
 
