@@ -13,3 +13,5 @@ export const PRODUCT_FILTER_FIELDS = [
   'minRating',
   'maxRating',
 ]
+
+export const IMAGE_URL = `http/localhost:8000/images/product`

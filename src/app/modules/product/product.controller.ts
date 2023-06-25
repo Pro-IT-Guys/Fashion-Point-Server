@@ -4,7 +4,7 @@ import catchAsync from '../../../shared/catchAsync'
 import { ProductService } from './product.service'
 import { sendSuccessResponse } from '../../../shared/customResponse'
 import pick from '../../../shared/pick'
-import { PRODUCT_FILTER_FIELDS } from './product.constant'
+import { IMAGE_URL, PRODUCT_FILTER_FIELDS } from './product.constant'
 import { IPaginationOption } from '../../../interfaces/sharedInterface'
 import { paginationFields } from '../../../constant/shared.constant'
 import httpStatus from 'http-status'
@@ -48,21 +48,21 @@ const updateProduct = catchAsync(async (req: Request, res: Response) => {
       const frontImageWebP = uploadedFiles.frontImage.map(
         (file: any) => `${convertToWebP(file.filename)}`
       )
-      productData.frontImage = frontImageWebP[0]
+      productData.frontImage = `${IMAGE_URL}/${frontImageWebP[0]}`
     }
 
     if (uploadedFiles.backImage) {
       const backImageWebP = uploadedFiles.backImage.map(
         (file: any) => `${convertToWebP(file.filename)}`
       )
-      productData.backImage = backImageWebP[0]
+      productData.backImage = `${IMAGE_URL}/${backImageWebP[0]}`
     }
 
     if (uploadedFiles.restImage) {
       const restImageWebP = uploadedFiles.restImage.map(
         (file: any) => `${convertToWebP(file.filename)}`
       )
-      productData.restImage = restImageWebP
+      productData.restImage = `${IMAGE_URL}/${restImageWebP}`
     }
   }
 

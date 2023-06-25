@@ -81,9 +81,15 @@ const storage = multer.diskStorage({
     file: any,
     cb: (error: Error | null, filename: string) => void
   ) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+    const currentDate = new Date()
+    const year = currentDate.getFullYear()
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+    const date = String(currentDate.getDate()).padStart(2, '0')
+    const milliseconds = String(currentDate.getMilliseconds()).padStart(3, '0')
+
+    const uniqueSuffix = `${year}${month}${date}${milliseconds}`
     const extension = file.originalname.split('.').pop()
-    cb(null, `${uniqueSuffix}.${extension}`)
+    cb(null, `${uniqueSuffix}-${file.originalname.split('.')[0]}.${extension}`)
   },
 })
 
