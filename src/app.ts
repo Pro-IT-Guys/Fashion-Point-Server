@@ -54,18 +54,18 @@ app.get('/images/product/:filename', (req, res) => {
 })
 
 // Forbidden routes
-// app.all('*', (req, res, next) => {
-//   res.status(httpStatus.NOT_FOUND).json({
-//     status: 'false',
-//     message: `No API endpoint found for ${req.method} ${req.originalUrl}`,
-//     errorMessages: [
-//       {
-//         message: `No API endpoint found for ${req.method} ${req.originalUrl}`,
-//         path: req.originalUrl,
-//       },
-//     ],
-//     stack: '',
-//   })
-// })
+app.all('*', (req, res, next) => {
+  res.status(httpStatus.NOT_FOUND).json({
+    status: 'false',
+    message: `No API endpoint found for ${req.method} ${req.originalUrl}`,
+    errorMessages: [
+      {
+        message: `No API endpoint found for ${req.method} ${req.originalUrl}`,
+        path: req.originalUrl,
+      },
+    ],
+    stack: '',
+  })
+})
 
 export default app

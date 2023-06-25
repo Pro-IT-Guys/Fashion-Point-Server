@@ -43,6 +43,7 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
 
   sendSuccessResponse(res, responseData)
 })
+
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id
   const productData = req.body
