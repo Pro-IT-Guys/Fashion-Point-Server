@@ -4,7 +4,7 @@ import { AuthRoute } from '../modules/auth/auth.route'
 import { BrandRoute } from '../modules/productBrand/brand.route'
 import { TypeRoute } from '../modules/productType/type.route'
 import { ProductRoute } from '../modules/product/product.route'
-import  path = require('path');
+import { DeliveryFeeRoute } from '../modules/deliveryFee/deliveryFee.route'
 
 const router = express.Router()
 
@@ -28,6 +28,10 @@ const routes = [
   {
     path: '/product',
     route: ProductRoute,
+  },
+  {
+    path: '/fee',
+    route: DeliveryFeeRoute,
   },
 ]
 
