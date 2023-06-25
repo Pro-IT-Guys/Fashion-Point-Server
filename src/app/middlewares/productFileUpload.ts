@@ -89,12 +89,28 @@ const storage = multer.diskStorage({
 
     const uniqueSuffix = `${year}${month}${date}${milliseconds}`
     const extension = file.originalname.split('.').pop()
-    cb(
-      null,
-      `${uniqueSuffix}-${file.originalname
-        .split('.')[0]
-        .replace(/\s/g, '')}.${extension}`
-    )
+
+    // Check if the file extension is valid
+    if (
+      extension !== 'webp' &&
+      extension !== 'jpg' &&
+      extension !== 'jpeg' &&
+      extension !== 'png'
+    ) {
+      const error = new Error(
+        'Invalid file format. Only images webp, jpg, jpeg, png are allowed.'
+      )
+      cb(error, '')
+    } else if (extension === 'webp') {
+      cb(null, `${uniqueSuffix}-${file.originalname.replace(/\s/g, '-')}`)
+    } else {
+      cb(
+        null,
+        `${uniqueSuffix}-${file.originalname
+          .split('.')[0]
+          .replace(/\s/g, '')}.${extension}`
+      )
+    }
   },
 })
 
@@ -130,32 +146,58 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if (uploadedFiles?.frontImage) {
       const frontImage = uploadedFiles.frontImage[0]
       const frontImagePath = frontImage.path
+      const frontImageExtension = path.extname(frontImagePath).toLowerCase()
       const frontImageWebPPath = path.join(
         path.dirname(frontImagePath),
-        `${path.basename(frontImagePath, path.extname(frontImagePath))}.webp`
+        `${path.basename(frontImagePath, frontImageExtension)}.webp`
       )
-      await sharp(frontImagePath).toFormat('webp').toFile(frontImageWebPPath)
 
-      // Remove original frontImage
-      setTimeout(() => {
-        deleteFileWithRetry(frontImagePath, 3, 3000)
-      }, 5000)
+      // Check if the frontImage is already in WebP format
+      if (frontImageExtension === '.webp') {
+        // Skip conversion, use the original WebP image
+        fs.rename(frontImagePath, frontImageWebPPath, error => {
+          if (error) {
+            console.error('Failed to rename the file:', error)
+          }
+        })
+      } else {
+        // Convert frontImage to WebP
+        await sharp(frontImagePath).toFormat('webp').toFile(frontImageWebPPath)
+
+        // Remove original frontImage
+        setTimeout(() => {
+          deleteFileWithRetry(frontImagePath, 3, 3000)
+        }, 5000)
+      }
     }
 
     // Convert backImage to WebP
     if (uploadedFiles?.backImage) {
       const backImage = uploadedFiles.backImage[0]
       const backImagePath = backImage.path
+      const backImageExtension = path.extname(backImagePath).toLowerCase()
       const backImageWebPPath = path.join(
         path.dirname(backImagePath),
-        `${path.basename(backImagePath, path.extname(backImagePath))}.webp`
+        `${path.basename(backImagePath, backImageExtension)}.webp`
       )
-      await sharp(backImagePath).toFormat('webp').toFile(backImageWebPPath)
 
-      // Remove original backImage
-      setTimeout(() => {
-        deleteFileWithRetry(backImagePath, 3, 3000)
-      }, 5000)
+      // Check if the backImage is already in WebP format
+      if (backImageExtension === '.webp') {
+        // Skip conversion, use the original WebP image
+        fs.rename(backImagePath, backImageWebPPath, error => {
+          if (error) {
+            console.error('Failed to rename the file:', error)
+          }
+        })
+      } else {
+        // Convert backImage to WebP
+        await sharp(backImagePath).toFormat('webp').toFile(backImageWebPPath)
+
+        // Remove original backImage
+        setTimeout(() => {
+          deleteFileWithRetry(backImagePath, 3, 3000)
+        }, 5000)
+      }
     }
 
     // Convert restImage files to WebP
@@ -164,16 +206,31 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
       await Promise.all(
         restImages.map(async (image: any) => {
           const restImagePath = image.path
+          const restImageExtension = path.extname(restImagePath).toLowerCase()
           const restImageWebPPath = path.join(
             path.dirname(restImagePath),
-            `${path.basename(restImagePath, path.extname(restImagePath))}.webp`
+            `${path.basename(restImagePath, restImageExtension)}.webp`
           )
-          await sharp(restImagePath).toFormat('webp').toFile(restImageWebPPath)
 
-          // Remove original restImage
-          setTimeout(() => {
-            deleteFileWithRetry(restImagePath, 3, 3000)
-          }, 5000)
+          // Check if the restImage is already in WebP format
+          if (restImageExtension === '.webp') {
+            // Skip conversion, use the original WebP image
+            fs.rename(restImagePath, restImageWebPPath, error => {
+              if (error) {
+                console.error('Failed to rename the file:', error)
+              }
+            })
+          } else {
+            // Convert restImage to WebP
+            await sharp(restImagePath)
+              .toFormat('webp')
+              .toFile(restImageWebPPath)
+
+            // Remove original restImage
+            setTimeout(() => {
+              deleteFileWithRetry(restImagePath, 3, 3000)
+            }, 5000)
+          }
         })
       )
     }
