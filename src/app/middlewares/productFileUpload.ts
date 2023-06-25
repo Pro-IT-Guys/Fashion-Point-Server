@@ -91,7 +91,9 @@ const storage = multer.diskStorage({
     const extension = file.originalname.split('.').pop()
     cb(
       null,
-      `${uniqueSuffix}-${file.originalname.split('.')[0].trim()}.${extension}`
+      `${uniqueSuffix}-${file.originalname
+        .split('.')[0]
+        .replace(/\s/g, '')}.${extension}`
     )
   },
 })
