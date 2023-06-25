@@ -21,12 +21,17 @@ const createProduct = async (req: Request, res: Response) => {
     const backImageWebP = uploadedFiles.backImage.map(
       (file: any) => `${convertToWebP(file.filename)}`
     )
-    const restImageWebP = uploadedFiles.restImage.map(
-      (file: any) => `${convertToWebP(file.filename)}`
-    )
 
-    productData.frontImage = frontImageWebP[0]
-    productData.backImage = backImageWebP[0]
+    const restImageFiles = uploadedFiles.restImage || []
+    let restImageWebP: string[] = []
+    if (restImageFiles.length > 0) {
+      restImageWebP = uploadedFiles.restImage.map(
+        (file: any) => `${IMAGE_URL}/${convertToWebP(file.filename)}`
+      )
+    }
+
+    productData.frontImage = `${IMAGE_URL}/${frontImageWebP[0]}`
+    productData.backImage = `${IMAGE_URL}/${backImageWebP[0]}`
     productData.restImage = restImageWebP
   }
 

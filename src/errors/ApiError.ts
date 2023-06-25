@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // Custom error class
 class ApiError extends Error {
   constructor(
