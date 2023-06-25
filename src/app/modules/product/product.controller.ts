@@ -10,7 +10,7 @@ import { paginationFields } from '../../../constant/shared.constant'
 import httpStatus from 'http-status'
 import convertToWebP from '../../helpers/convertImageToWebp'
 
-const createProduct = async (req: Request, res: Response) => {
+const createProduct = catchAsync(async (req: Request, res: Response) => {
   const productData = req.body
   const uploadedFiles = req.files as any
 
@@ -42,7 +42,7 @@ const createProduct = async (req: Request, res: Response) => {
   }
 
   sendSuccessResponse(res, responseData)
-}
+})
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id
   const productData = req.body

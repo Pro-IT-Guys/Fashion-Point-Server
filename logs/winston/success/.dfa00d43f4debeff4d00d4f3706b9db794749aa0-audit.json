@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\success\\.dfa00d43f4debeff4d00d4f3706b9db794749aa0-audit.json",
+    "files": [
+        {
+            "date": 1687699107147,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-25-19-success.log",
+            "hash": "e3cdf2fd91cd1e880e2ab0e87e65faf2f9faf568b52c2c5f166e581e6b461695"
+        }
+    ],
+    "hashType": "sha256"
+}
