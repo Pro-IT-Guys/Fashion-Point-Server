@@ -89,7 +89,10 @@ const storage = multer.diskStorage({
 
     const uniqueSuffix = `${year}${month}${date}${milliseconds}`
     const extension = file.originalname.split('.').pop()
-    cb(null, `${uniqueSuffix}-${file.originalname.split('.')[0]}.${extension}`)
+    cb(
+      null,
+      `${uniqueSuffix}-${file.originalname.split('.')[0].trim()}.${extension}`
+    )
   },
 })
 
