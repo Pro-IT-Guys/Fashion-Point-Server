@@ -4,6 +4,7 @@ import { AuthRoute } from '../modules/auth/auth.route'
 import { BrandRoute } from '../modules/productBrand/brand.route'
 import { TypeRoute } from '../modules/productType/type.route'
 import { ProductRoute } from '../modules/product/product.route'
+import  path = require('path');
 
 const router = express.Router()
 
@@ -33,5 +34,6 @@ const routes = [
 routes.forEach(route => {
   router.use(route.path, route.route)
 })
+
 
 export default router
