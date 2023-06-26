@@ -144,7 +144,50 @@ const updateFee = async (
   }
 }
 
+const getFeeOfLocation = async (
+  countryId: string,
+  stateCode: string,
+  city_name?: string
+): Promise<{
+  country: string
+  delivery_fee: number
+  city_name?: string
+  state_name: string
+}> => {
+  const fullData = await deliveryFeeModel.findById(countryId)
+  if (!fullData) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Country not found')
+  }
+
+  const state = fullData.states.find(state => {
+    return state.state_code === stateCode
+  })
+  if (!state) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'State not found')
+  }
+
+  if (state.cities?.length && city_name) {
+    const city = state.cities.find(city => city.city_name === city_name)
+    if (!city) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'City not found')
+    }
+    return {
+      country: fullData.country,
+      delivery_fee: city.delivery_fee ?? 0,
+      city_name: city.city_name,
+      state_name: state.state_name,
+    }
+  } else {
+    return {
+      country: fullData.country,
+      delivery_fee: state.delivery_fee ?? 0,
+      state_name: state.state_name,
+    }
+  }
+}
+
 export const DeliveryFeeService = {
   CreateFee,
   updateFee,
+  getFeeOfLocation,
 }

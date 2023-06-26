@@ -21,5 +21,5 @@ export interface ICountry {
 }
 
 export interface IDeliveryFeeModel extends Model<ICountry> {
-  getProductById(id: string): Promise<ICountry>
+  getFeeById(id: string): Promise<ICountry>
 }

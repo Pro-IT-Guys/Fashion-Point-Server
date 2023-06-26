@@ -13,4 +13,5 @@ export default {
   access_token: process.env.ACCESS_TOKEN,
   app_email: process.env.APP_EMAIL,
   app_password: process.env.APP_PASSWORD,
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY,
 }
