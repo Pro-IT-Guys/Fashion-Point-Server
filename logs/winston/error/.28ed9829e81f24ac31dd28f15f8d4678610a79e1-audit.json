@@ -1,0 +1,45 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\.28ed9829e81f24ac31dd28f15f8d4678610a79e1-audit.json",
+    "files": [
+        {
+            "date": 1687708718672,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-21-error.log",
+            "hash": "6d1204904ebadfd29589556c3b3018008564a754fbd09f0528dc352dc3074275"
+        },
+        {
+            "date": 1687708924217,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-22-error.log",
+            "hash": "3fc8e80059df6c57f2e87a7bb6a65d5584e30f63a5a25924f68887258dd7d0b3"
+        },
+        {
+            "date": 1687714211924,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-23-error.log",
+            "hash": "6f82cff4e5d3fb1f9fc0aaf0a94734e4e0d5c04e41b497d406f906108ca4d6e1"
+        },
+        {
+            "date": 1687752381185,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-10-error.log",
+            "hash": "c998991eebd7e416f1506df322934e3bbe28c5dc436de5cf5af144dd25fff284"
+        },
+        {
+            "date": 1687757138160,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-11-error.log",
+            "hash": "bb97446db21f9b00f0073b49078096026e84c043627619d512811d770d90d9c1"
+        },
+        {
+            "date": 1687779725598,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-17-error.log",
+            "hash": "cdcff876e8c347c18741aab583d3bd44a965860a4b0afa1e7484da0e54f6c3e4"
+        },
+        {
+            "date": 1687780841464,
+            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-18-error.log",
+            "hash": "71df90a7a5c3bf32ee1f5a201335bd580e2cf79dfc2f8f5ded9d081e69245e3c"
+        }
+    ],
+    "hashType": "sha256"
+}
