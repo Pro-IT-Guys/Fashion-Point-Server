@@ -26,7 +26,7 @@ export interface IOrder {
   subTotal: number
   paymentMethod: string
   isPaid: boolean
-  paidAt?: string
+  paidAt?: Date
   deliveryAt?: Date
 }
 
