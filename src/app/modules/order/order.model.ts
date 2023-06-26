@@ -1,6 +1,31 @@
 import { Schema, model } from 'mongoose'
 import { IOrder, IOrderModel } from './order.interface'
 
+const orderItemSchema = new Schema(
+  {
+    product: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: true,
+    },
+    size: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    _id: false,
+  }
+)
+
 const orderSchema = new Schema<IOrder>(
   {
     userId: {
@@ -8,19 +33,7 @@ const orderSchema = new Schema<IOrder>(
       ref: 'User',
       required: true,
     },
-    orderItems: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: 'Product',
-          required: true,
-        },
-        quantity: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
+    orderItems: [orderItemSchema],
     phoneNumber: {
       type: String,
       required: true,
@@ -41,10 +54,12 @@ const orderSchema = new Schema<IOrder>(
       city: {
         type: String,
       },
+      address_line: {
+        type: String,
+      },
     },
     deliveryFee: {
       type: Number,
-      required: true,
     },
     deliveryStatus: {
       type: String,
@@ -63,7 +78,7 @@ const orderSchema = new Schema<IOrder>(
       default: false,
     },
     paidAt: {
-      type: Date,
+      type: String,
     },
     deliveryAt: {
       type: Date,

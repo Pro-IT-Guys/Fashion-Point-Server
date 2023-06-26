@@ -2,14 +2,17 @@
 import { Model, Types } from 'mongoose'
 
 export interface IOrderItem {
-  productId: string
+  product: string
   quantity: number
+  color: string
+  size: string
 }
 
 export interface IShippingAddress {
   country: string
   state: string
   city?: string
+  address_line?: string
 }
 
 export interface IOrder {
@@ -23,7 +26,7 @@ export interface IOrder {
   subTotal: number
   paymentMethod: string
   isPaid: boolean
-  paidAt?: Date
+  paidAt?: string
   deliveryAt?: Date
 }
 

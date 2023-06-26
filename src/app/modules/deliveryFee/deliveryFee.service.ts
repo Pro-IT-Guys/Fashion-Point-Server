@@ -149,6 +149,7 @@ const getFeeOfLocation = async (
   stateCode: string,
   city_name?: string
 ): Promise<{
+  country: string
   delivery_fee: number
   city_name?: string
   state_name: string
@@ -171,12 +172,14 @@ const getFeeOfLocation = async (
       throw new ApiError(httpStatus.NOT_FOUND, 'City not found')
     }
     return {
+      country: fullData.country,
       delivery_fee: city.delivery_fee ?? 0,
       city_name: city.city_name,
       state_name: state.state_name,
     }
   } else {
     return {
+      country: fullData.country,
       delivery_fee: state.delivery_fee ?? 0,
       state_name: state.state_name,
     }
