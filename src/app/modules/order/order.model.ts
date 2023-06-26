@@ -21,6 +21,14 @@ const orderSchema = new Schema<IOrder>(
         },
       },
     ],
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
     shippingAddress: {
       country: {
         type: String,

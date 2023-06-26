@@ -15,6 +15,8 @@ export interface IShippingAddress {
 export interface IOrder {
   userId: Types.ObjectId
   orderItems: IOrderItem[]
+  phoneNumber: string
+  email: string
   shippingAddress: IShippingAddress
   deliveryFee?: number // get from db
   deliveryStatus?: string // get from db
