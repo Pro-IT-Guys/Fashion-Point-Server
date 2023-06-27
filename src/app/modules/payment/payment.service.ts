@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Stripe from 'stripe'
-import paypal from 'paypal-rest-sdk'
+import paypal, { Payment } from 'paypal-rest-sdk'
 import config from '../../../config'
 import orderModel from '../order/order.model'
 import { IOrder } from '../order/order.interface'
 import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
-import { OrderWithRedirect } from './payment.interface'
+import { CustomPayment, OrderWithRedirect } from './payment.interface'
 
 const stripe = new Stripe(config.stripe_secret_key as string, {
   apiVersion: '2022-11-15',
@@ -47,6 +47,7 @@ const stripePayment = async (
     // Set the payment method string to the order.paymentMethod field
     if (paymentMethod.card) {
       order.paymentMethod = paymentMethod.card.brand as string
+      order.paymentId = paymentIntent.id as string
     } else {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Card information missing')
     }
@@ -130,14 +131,13 @@ const paypalPayment = async (
   }
 
   // Store the PayPal payment ID in your order model
-  order.paymentMethod = createdPayment.id
+  order.paymentMethod = 'PayPal'
+  order.paymentId = createdPayment.id
 
   if (approvalUrl) {
     const url: OrderWithRedirect = { redirectUrl: approvalUrl.href }
 
     if (approvalUrl.href) {
-      order.isPaid = true
-      order.paidAt = new Date()
       await order.save()
     }
 
@@ -150,7 +150,46 @@ const paypalPayment = async (
   }
 }
 
+const handlePayPalWebhookForVerifyPayment = async (
+  paymentId: string
+): Promise<IOrder> => {
+  // Retrieve the payment details from PayPal
+  const payment = await new Promise<Payment>((resolve, reject) => {
+    paypal.payment.get(paymentId, (error: any, retrievedPayment: Payment) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(retrievedPayment)
+      }
+    })
+  })
+
+  let paymentStatus = ''
+  let isPaid = false
+
+  if ((payment as CustomPayment).payer?.status === 'VERIFIED') {
+    // Handle the payment status update
+    paymentStatus = (payment as CustomPayment).payer.status
+    isPaid = paymentStatus === 'VERIFIED'
+  }
+
+  if (isPaid) {
+    // Update the payment status in your application's database or order model
+    const order = await orderModel.findOneAndUpdate(
+      { paymentId: paymentId },
+      { isPaid, paidAt: new Date() },
+      { new: true }
+    )
+    if (!order) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+
+    return order
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Payment failed')
+  }
+}
+
 export const PaymentService = {
   stripePayment,
   paypalPayment,
+  handlePayPalWebhookForVerifyPayment,
 }

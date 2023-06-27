@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import paypal from 'paypal-rest-sdk'
 import { PaymentService } from './payment.service'
 import catchAsync from '../../../shared/catchAsync'
 import { sendSuccessResponse } from '../../../shared/customResponse'
@@ -46,7 +45,25 @@ const paypalPayment = catchAsync(async (req: Request, res: Response) => {
   }
 })
 
+const handlePayPalWebhookForVerifyPayment = catchAsync(
+  async (req: Request, res: Response) => {
+    // Get the payment ID from the webhook event
+    const paymentId = req.body.resource.id
+
+    const payment = await PaymentService.handlePayPalWebhookForVerifyPayment(
+      paymentId
+    )
+
+    const responseData = {
+      data: payment,
+      message: 'Payment processed successfully',
+    }
+    sendSuccessResponse(res, responseData)
+  }
+)
+
 export const PaymentController = {
   stripePayment,
   paypalPayment,
+  handlePayPalWebhookForVerifyPayment,
 }

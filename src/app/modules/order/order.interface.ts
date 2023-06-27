@@ -25,6 +25,7 @@ export interface IOrder {
   deliveryStatus?: string // get from db
   subTotal: number
   paymentMethod?: string
+  paymentId?: string
   isPaid: boolean
   paidAt?: Date
   deliveryAt?: Date
