@@ -3,6 +3,7 @@ import { PaymentController } from './payment.controller'
 
 const router = express.Router()
 
-router.post('/', PaymentController.processPayment)
+router.post('/stripe', PaymentController.stripePayment)
+router.post('/paypal', PaymentController.paypalPayment)
 
 export const PaymentRoute = router

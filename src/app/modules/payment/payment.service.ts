@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Stripe from 'stripe'
+import paypal from 'paypal-rest-sdk'
 import config from '../../../config'
 import orderModel from '../order/order.model'
 import { IOrder } from '../order/order.interface'
 import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
+import { OrderWithRedirect } from './payment.interface'
 
 const stripe = new Stripe(config.stripe_secret_key as string, {
   apiVersion: '2022-11-15',
 })
 
-const processPayment = async (
+const stripePayment = async (
   orderId: string,
   paymentMethodId: string,
   currency: string
@@ -55,6 +58,92 @@ const processPayment = async (
   }
 }
 
+paypal.configure({
+  mode: config.paypal_mode as string, // Set the mode ('sandbox' or 'live') based on your environment
+  client_id: config.paypal_client_id as string,
+  client_secret: config.paypal_secret_key as string,
+})
+
+const paypalPayment = async (
+  orderId: string,
+  email: string,
+  currency: string
+): Promise<OrderWithRedirect> => {
+  const order = await orderModel.findById(orderId)
+
+  if (!order) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+  }
+
+  // Create a PayPal payment object
+  const paymentData = {
+    intent: 'sale',
+    payer: {
+      payment_method: 'paypal',
+      payer_info: {
+        email: email,
+      },
+    },
+    transactions: [
+      {
+        amount: {
+          total: ((order.deliveryFee as number) + order.subTotal).toFixed(2),
+          currency: currency,
+        },
+      },
+    ],
+    redirect_urls: {
+      return_url: 'http://yourwebsite.com/paypal/success',
+      cancel_url: 'http://yourwebsite.com/paypal/cancel',
+    },
+  }
+
+  const createdPayment = await new Promise<paypal.Payment>(
+    (resolve, reject) => {
+      paypal.payment.create(paymentData, (error: any, payment: any) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(payment)
+        }
+      })
+    }
+  )
+
+  if (!createdPayment.links) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Failed to create PayPal payment'
+    )
+  }
+
+  // Redirect the user to the PayPal payment approval URL
+  const approvalUrl = createdPayment.links.find(
+    (link: any) => link.rel === 'approval_url'
+  )
+
+  if (!approvalUrl) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Failed to find PayPal approval URL'
+    )
+  }
+
+  // Store the PayPal payment ID in your order model
+  order.paymentMethod = createdPayment.id
+
+  if (approvalUrl) {
+    const url: OrderWithRedirect = { redirectUrl: approvalUrl.href }
+    return url
+  } else {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Failed to create PayPal payment'
+    )
+  }
+}
+
 export const PaymentService = {
-  processPayment,
+  stripePayment,
+  paypalPayment,
 }
