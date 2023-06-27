@@ -94,8 +94,8 @@ const paypalPayment = async (
       },
     ],
     redirect_urls: {
-      return_url: 'http://yourwebsite.com/paypal/success',
-      cancel_url: 'http://yourwebsite.com/paypal/cancel',
+      return_url: 'https://ayon-jodder.netlify.app/success',
+      cancel_url: 'https://ayon-jodder.netlify.app/cancel',
     },
   }
 
