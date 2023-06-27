@@ -134,6 +134,13 @@ const paypalPayment = async (
 
   if (approvalUrl) {
     const url: OrderWithRedirect = { redirectUrl: approvalUrl.href }
+
+    if (approvalUrl.href) {
+      order.isPaid = true
+      order.paidAt = new Date()
+      await order.save()
+    }
+
     return url
   } else {
     throw new ApiError(
