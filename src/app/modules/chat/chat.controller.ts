@@ -28,9 +28,14 @@ const getChatOfSender = catchAsync(async (req: Request, res: Response) => {
 const getChatOfSenderAndReceiver = catchAsync(
   async (req: Request, res: Response) => {
     const { senderId, receiverId } = req.params
+
+    if (!senderId || !receiverId) {
+      throw new Error('Sender and receiver id is required')
+    }
+
     const chats = await ChatService.getChatOfSenderAndReceiver(
-      senderId,
-      receiverId
+      senderId as string,
+      receiverId as string
     )
 
     const responseData = {
