@@ -54,7 +54,11 @@ const getChatOfSenderAndReceiver = async (
   receiverId: string
 ): Promise<IChat> => {
   const chats = await chatModel
-    .findOne({ members: [senderId, receiverId] })
+    .findOne({
+      members: {
+        $all: [senderId, receiverId],
+      },
+    })
     .populate([
       {
         path: 'members',
@@ -65,7 +69,7 @@ const getChatOfSenderAndReceiver = async (
     ])
 
   if (!chats)
-    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Chats not found')
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Chat not found')
 
   return chats
 }

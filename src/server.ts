@@ -7,6 +7,51 @@ import { Server } from 'http'
 
 let server: Server
 
+// Socket start ====================================================================>>>
+/* eslint-disable @typescript-eslint/no-var-requires */
+const io = require('socket.io')(8080, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+})
+
+const activeUsers: { userId: string; socketId: string }[] = []
+
+io.on('connection', (socket: any) => {
+  //   Add new user
+  socket.on('new-user-add', (newUserId: string) => {
+    if (newUserId && !activeUsers.some(user => user.userId === newUserId)) {
+      activeUsers.push({ userId: newUserId, socketId: socket.id })
+    }
+    console.log(activeUsers, 'active users')
+    io.emit('get-active-users', activeUsers)
+  })
+
+  //  Send message
+  socket.on('send-message', (data: any) => {
+    const { receiverId } = data
+    console.log(receiverId, 'data from socket')
+    const receiver = activeUsers.find(user => {
+      console.log(user.userId, receiverId._id, 'user from socket')
+      return user.userId === receiverId._id
+    })
+    console.log(receiver, 'receiver from socket')
+
+    if (receiver) {
+      io.to(receiver.socketId).emit('receive-message', data)
+    }
+  })
+
+  // Disconnect user
+  socket.on('disconnect', () => {
+    activeUsers.filter(user => user.socketId !== socket.id)
+    io.emit('get-active-users', activeUsers)
+  })
+})
+
+// Socket end ====================================================================>>>
+
 /* This code is setting up a listener for uncaught exception. It's a synchronous process */
 process.on('uncaughtException', error => {
   errorLogger.error(error)

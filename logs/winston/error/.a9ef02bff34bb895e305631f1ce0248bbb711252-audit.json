@@ -1,0 +1,40 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\.a9ef02bff34bb895e305631f1ce0248bbb711252-audit.json",
+    "files": [
+        {
+            "date": 1687957437220,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-19-error.log",
+            "hash": "01114390d5e93290ec61bfd585877b926be9c7e6cc717f6d436a00294355e6d7"
+        },
+        {
+            "date": 1687962589136,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-20-error.log",
+            "hash": "8f173259357f99b91bae615b9d5eedae0926d298e9e45bd0fce7b51eb2fe44af"
+        },
+        {
+            "date": 1687967332552,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-21-error.log",
+            "hash": "2d437e99820654dba99dfb96b657d18e2902c13a5f98abe54fcdd2d9ebe187d2"
+        },
+        {
+            "date": 1687968021876,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-22-error.log",
+            "hash": "0892f033eeaa889737175cabec74a4d35bb6cb2e554c8a71679a90bb3851e235"
+        },
+        {
+            "date": 1687971647286,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-23-error.log",
+            "hash": "4276d8f26397e747b597e5c0fd24bd56fad2531819a9c98c74c36ebf79cd2c83"
+        },
+        {
+            "date": 1687975376414,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-29-00-error.log",
+            "hash": "8c4341f53177079fb0660faffadde8a517e55224a9c50e49f87c2a9ffb736215"
+        }
+    ],
+    "hashType": "sha256"
+}
