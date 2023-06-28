@@ -7,11 +7,17 @@ const createChat = async (members: {
   senderId: string
   receiverId: string
 }): Promise<IChat> => {
-  const isReceiverExist = await chatModel.exists({
-    members: members.receiverId,
-  })
+  const isChatExistWithBothIds = await chatModel.aggregate([
+    {
+      $match: {
+        members: {
+          $all: [members.senderId, members.receiverId],
+        },
+      },
+    },
+  ])
 
-  if (isReceiverExist) {
+  if (isChatExistWithBothIds) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Chat already exist')
   }
 
