@@ -4,6 +4,7 @@ import { UserController } from './user.controller'
 
 const router = express.Router()
 
-router.get('/', verifyAdmin, UserController.getAllUsers)
+router.get('/', UserController.getAllUsers)
+// router.get('/', verifyAdmin, UserController.getAllUsers)
 
 export const UserRoute = router
