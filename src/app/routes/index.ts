@@ -8,6 +8,7 @@ import { DeliveryFeeRoute } from '../modules/deliveryFee/deliveryFee.route'
 import { locationRoute } from '../modules/location/location.route'
 import { OrderRoute } from '../modules/order/order.route'
 import { PaymentRoute } from '../modules/payment/payment.route'
+import { ChatRoute } from '../modules/chat/chat.route'
 
 const router = express.Router()
 
@@ -47,6 +48,10 @@ const routes = [
   {
     path: '/payment',
     route: PaymentRoute,
+  },
+  {
+    path: '/chat',
+    route: ChatRoute,
   },
 ]
 

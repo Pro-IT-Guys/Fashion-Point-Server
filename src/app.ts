@@ -5,7 +5,7 @@ import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import httpStatus from 'http-status'
 import { sendSuccessResponse } from './shared/customResponse'
-import path = require('path')
+import path from 'path'
 
 // Import routes
 import routes from './app/routes/index'

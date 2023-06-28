@@ -1,0 +1,4 @@
+Wed Jun 28 2023 | 0:21:34 [Error Log] error: Error while connecting database:  Cannot access 'server' before initialization
+Wed Jun 28 2023 | 0:21:39 [Error Log] error: Error while connecting database:  ChatController is not defined
+Wed Jun 28 2023 | 0:21:51 [Error Log] error: Error while connecting database:  ChatController is not defined
+Wed Jun 28 2023 | 0:22:9 [Error Log] error: Error while connecting database:  setupSocket is not defined

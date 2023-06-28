@@ -1,0 +1,45 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\.4f110b3b4a617c2788dc9678c5d794f906caa71c-audit.json",
+    "files": [
+        {
+            "date": 1687888432247,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-27-23-success.log",
+            "hash": "fa7f44101ff1435135176bf1db0acec4df19885e7c7f92b5df9b607e16163bc9"
+        },
+        {
+            "date": 1687889152525,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-28-00-success.log",
+            "hash": "8d2122b864ea5c8d932fc091a6879f10355a30589744fec58b3a22bfa01421a1"
+        },
+        {
+            "date": 1687892786646,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-28-01-success.log",
+            "hash": "46917ddce40435f719b761985cf1593072046a57f76c4e7448fba5103ef41ce8"
+        },
+        {
+            "date": 1687927106327,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-28-10-success.log",
+            "hash": "37489b3f4a3ee2290c8e482b4dad1c70d0d4f475521cb7e3269385821b271494"
+        },
+        {
+            "date": 1687933332324,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-28-12-success.log",
+            "hash": "87112b917f45523a563804981cca556dbddc791eff51d3e66b27fa7a52563cb9"
+        },
+        {
+            "date": 1687942363531,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-28-14-success.log",
+            "hash": "b8e6ea61dad7995c551307dfafb1632c6c3ba709fa10335cbaea7445446ee823"
+        },
+        {
+            "date": 1687942808800,
+            "name": "D:\\Advanced Backend\\E-Commerce-uae-backend\\logs\\winston\\success\\phu-2023-06-28-15-success.log",
+            "hash": "93303ace821a85e8fda365b6a591f52f84210293a593f50b4408569e745c4b48"
+        }
+    ],
+    "hashType": "sha256"
+}
