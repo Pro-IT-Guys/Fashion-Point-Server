@@ -19,34 +19,26 @@ const io = require('socket.io')(8080, {
 const activeUsers: { userId: string; socketId: string }[] = []
 
 io.on('connection', (socket: any) => {
-  //   Add new user
-  socket.on('new-user-add', (newUserId: string) => {
-    if (newUserId && !activeUsers.some(user => user.userId === newUserId)) {
-      activeUsers.push({ userId: newUserId, socketId: socket.id })
+  socket.on('join', (userId: string) => {
+    if (userId && !activeUsers.some(user => user.userId === userId)) {
+      activeUsers.push({ userId, socketId: socket.id })
     }
-    console.log(activeUsers, 'active users')
-    io.emit('get-active-users', activeUsers)
+    io.emit('activeUsers', activeUsers)
   })
 
-  //  Send message
-  socket.on('send-message', (data: any) => {
-    const { receiverId } = data
-    console.log(receiverId, 'data from socket')
-    const receiver = activeUsers.find(user => {
-      console.log(user.userId, receiverId._id, 'user from socket')
-      return user.userId === receiverId._id
-    })
-    console.log(receiver, 'receiver from socket')
+  socket.on('sendMessage', (data: any) => {
+    const receiver = activeUsers.find(
+      user => user.userId === data.receiverId._id
+    )
 
     if (receiver) {
-      io.to(receiver.socketId).emit('receive-message', data)
+      io.to(receiver.socketId).emit('getMessage', data)
     }
   })
 
-  // Disconnect user
   socket.on('disconnect', () => {
-    activeUsers.filter(user => user.socketId !== socket.id)
-    io.emit('get-active-users', activeUsers)
+    const newActive = activeUsers.filter(user => user.socketId !== socket.id)
+    io.emit('activeUsers', newActive)
   })
 })
 

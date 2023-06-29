@@ -1,0 +1,1 @@
+Thu Jun 29 2023 | 0:58:30 [Error Log] error: Cannot destructure property 'receiverId' of 'data' as it is null.
