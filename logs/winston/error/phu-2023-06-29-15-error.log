@@ -1,5 +1,0 @@
-Thu Jun 29 2023 | 15:37:13 [Error Log] error: The "listener" argument must be of type function. Received undefined
-Thu Jun 29 2023 | 15:38:29 [Error Log] error: s is not defined
-Thu Jun 29 2023 | 15:38:32 [Error Log] error: soc is not defined
-Thu Jun 29 2023 | 15:50:28 [Error Log] error: The "listener" argument must be of type function. Received undefined
-Thu Jun 29 2023 | 15:50:40 [Error Log] error: The "listener" argument must be of type function. Received undefined
