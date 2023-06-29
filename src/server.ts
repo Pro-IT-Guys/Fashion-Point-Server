@@ -16,29 +16,33 @@ const io = require('socket.io')(8080, {
   },
 })
 
-const activeUsers: { userId: string; socketId: string }[] = []
+const activeUsers = new Map()
 
 io.on('connection', (socket: any) => {
   socket.on('join', (userId: string) => {
-    if (userId && !activeUsers.some(user => user.userId === userId)) {
-      activeUsers.push({ userId, socketId: socket.id })
+    if (userId && !activeUsers.has(userId)) {
+      activeUsers.set(userId, socket.id)
     }
-    io.emit('activeUsers', activeUsers)
+    io.emit('activeUsers', Array.from(activeUsers.keys()))
   })
 
   socket.on('sendMessage', (data: any) => {
-    const receiver = activeUsers.find(
-      user => user.userId === data.receiverId._id
-    )
+    const receiverId = data.receiverId
+    const receiverSocketId = activeUsers.get(receiverId)
 
-    if (receiver) {
-      io.to(receiver.socketId).emit('getMessage', data)
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit('getMessage', data)
     }
   })
 
   socket.on('disconnect', () => {
-    const newActive = activeUsers.filter(user => user.socketId !== socket.id)
-    io.emit('activeUsers', newActive)
+    for (const [userId, socketId] of activeUsers.entries()) {
+      if (socketId === socket.id) {
+        activeUsers.delete(userId)
+        break
+      }
+    }
+    io.emit('activeUsers', Array.from(activeUsers.keys()))
   })
 })
 
