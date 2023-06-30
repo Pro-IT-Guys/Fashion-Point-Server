@@ -74,8 +74,25 @@ const getChatOfSenderAndReceiver = async (
   return chats
 }
 
+const getAllChat = async (): Promise<IChat[]> => {
+  const chats = await chatModel.find({}).populate([
+    {
+      path: 'members',
+    },
+    {
+      path: 'members',
+    },
+  ])
+
+  if (!chats)
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Chats not found')
+
+  return chats
+}
+
 export const ChatService = {
   createChat,
   getChatOfSender,
   getChatOfSenderAndReceiver,
+  getAllChat,
 }
