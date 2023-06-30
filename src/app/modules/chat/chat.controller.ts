@@ -46,8 +46,19 @@ const getChatOfSenderAndReceiver = catchAsync(
   }
 )
 
+const getAllChat = catchAsync(async (req: Request, res: Response) => {
+  const chats = await ChatService.getAllChat()
+
+  const responseData = {
+    data: chats,
+    message: 'All chats faced',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 export const ChatController = {
   createChat,
   getChatOfSender,
   getChatOfSenderAndReceiver,
+  getAllChat,
 }
