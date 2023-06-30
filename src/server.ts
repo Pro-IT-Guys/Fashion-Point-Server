@@ -7,6 +7,47 @@ import { Server } from 'http'
 
 let server: Server
 
+// Socket start ====================================================================>>>
+/* eslint-disable @typescript-eslint/no-var-requires */
+const io = require('socket.io')(8080, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+})
+
+const activeUsers = new Map()
+
+io.on('connection', (socket: any) => {
+  socket.on('join', (userId: string) => {
+    if (userId && !activeUsers.has(userId)) {
+      activeUsers.set(userId, socket.id)
+    }
+    io.emit('activeUsers', Array.from(activeUsers.keys()))
+  })
+
+  socket.on('sendMessage', (data: any) => {
+    const receiverId = data.receiverId
+    const receiverSocketId = activeUsers.get(receiverId)
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit('getMessage', data)
+    }
+  })
+
+  socket.on('disconnect', () => {
+    for (const [userId, socketId] of activeUsers.entries()) {
+      if (socketId === socket.id) {
+        activeUsers.delete(userId)
+        break
+      }
+    }
+    io.emit('activeUsers', Array.from(activeUsers.keys()))
+  })
+})
+
+// Socket end ====================================================================>>>
+
 /* This code is setting up a listener for uncaught exception. It's a synchronous process */
 process.on('uncaughtException', error => {
   errorLogger.error(error)
