@@ -17,7 +17,7 @@ export interface IProduct {
   size: string[]
   tag: string[]
   brand: Schema.Types.ObjectId // productBrand id ref
-  rating: number
+  review?: Schema.Types.ObjectId[] // productReview id ref
   type: Schema.Types.ObjectId // productType id ref
 }
 
