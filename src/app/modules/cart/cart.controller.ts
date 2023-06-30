@@ -14,6 +14,43 @@ const addToCart = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const updateCart = catchAsync(async (req: Request, res: Response) => {
+  const cartId = req.params.id
+  const cartData = req.body
+  const cart = await CartService.updateCart(cartId, cartData)
+
+  const responseData = {
+    data: cart,
+    message: 'Cart updated successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
+const getCartByUserId = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.id
+  const cart = await CartService.getCartByUserId(userId)
+
+  const responseData = {
+    data: cart,
+    message: 'Cart fetched successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
+const getCartByCartId = catchAsync(async (req: Request, res: Response) => {
+  const cartId = req.params.id
+  const cart = await CartService.getCartByCartId(cartId)
+
+  const responseData = {
+    data: cart,
+    message: 'Cart fetched successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 export const CartController = {
   addToCart,
+  updateCart,
+  getCartByUserId,
+  getCartByCartId,
 }
