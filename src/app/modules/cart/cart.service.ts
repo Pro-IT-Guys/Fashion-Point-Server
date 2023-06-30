@@ -8,6 +8,8 @@ const addToCart = async (cartData: ICart): Promise<ICart> => {
   if (isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart already exist')
 
   const cart = await cartModel.create(cartData)
+  await cart.populate('product.productId')
+
   if (!cart)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to add items to cart')
 
