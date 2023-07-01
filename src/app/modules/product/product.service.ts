@@ -10,8 +10,6 @@ import {
 import { PRODUCT_SEARCH_FIELDS } from './product.constant'
 import paginationHelper from '../../helpers/paginationHelper'
 import { SortOrder } from 'mongoose'
-import brandModel from '../productBrand/brand.model'
-import typeModel from '../productType/type.model'
 
 const createProduct = async (productData: IProduct): Promise<IProduct> => {
   let sku = generateUniqueSKU(6)
@@ -19,19 +17,10 @@ const createProduct = async (productData: IProduct): Promise<IProduct> => {
     sku = generateUniqueSKU(6) // Check if the generated SKU already exists in the database. If it does, generate a new one.
   }
 
-  const product = (
-    await productModel.create({
-      ...productData,
-      sku,
-    })
-  ).populate([
-    {
-      path: 'brand',
-    },
-    {
-      path: 'type',
-    },
-  ])
+  const product = await productModel.create({
+    ...productData,
+    sku,
+  })
 
   if (!product)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product creation failed')
@@ -46,16 +35,11 @@ const updateProduct = async (
   const isExist = await productModel.findOne({ _id: productId })
   if (!isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
 
-  const product = await productModel
-    .findOneAndUpdate({ _id: productId }, productData, { new: true })
-    .populate([
-      {
-        path: 'brand',
-      },
-      {
-        path: 'type',
-      },
-    ])
+  const product = await productModel.findOneAndUpdate(
+    { _id: productId },
+    productData,
+    { new: true }
+  )
 
   if (!product)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Product update failed')
@@ -159,8 +143,6 @@ const getAllProduct = async (
 
   const result = await productModel
     .find(whereCondition)
-    .populate('brand', 'name')
-    .populate('type', 'name')
     .sort(sortCondition)
     .skip(skip)
     .limit(limit as number)
@@ -179,14 +161,7 @@ const getAllProduct = async (
 }
 
 const getProductById = async (productId: string): Promise<IProduct> => {
-  const product = await productModel.findOne({ _id: productId }).populate([
-    {
-      path: 'brand',
-    },
-    {
-      path: 'type',
-    },
-  ])
+  const product = await productModel.findOne({ _id: productId })
 
   if (!product) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
 
@@ -194,9 +169,7 @@ const getProductById = async (productId: string): Promise<IProduct> => {
 }
 
 const getProductByPath = async (path: string): Promise<IProduct> => {
-  const product = await productModel
-    .findOne({ path })
-    .populate([{ path: 'brand' }, { path: 'type' }])
+  const product = await productModel.findOne({ path })
 
   if (!product) throw new ApiError(httpStatus.BAD_REQUEST, 'Product not found')
   return product
