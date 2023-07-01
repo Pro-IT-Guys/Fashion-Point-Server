@@ -80,8 +80,11 @@ const productSchema = new Schema<IProduct>(
       type: [Schema.Types.ObjectId],
     },
     type: {
-      type: Schema.Types.ObjectId,
-      ref: 'ProductType',
+      type: [String],
+      required: true,
+    },
+    style: {
+      type: [String],
       required: true,
     },
   },

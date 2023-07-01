@@ -18,7 +18,8 @@ export interface IProduct {
   tag: string[]
   brand: Schema.Types.ObjectId // productBrand id ref
   review?: Schema.Types.ObjectId[] // productReview id ref
-  type: Schema.Types.ObjectId // productType id ref
+  type: string[]
+  style: string[]
 }
 
 export interface IProductModel extends Model<IProduct> {
