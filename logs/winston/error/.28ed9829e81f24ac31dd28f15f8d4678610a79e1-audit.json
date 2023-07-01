@@ -1,90 +1,90 @@
 {
-    "keep": {
-        "days": true,
-        "amount": 14
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\.28ed9829e81f24ac31dd28f15f8d4678610a79e1-audit.json",
+  "files": [
+    {
+      "date": 1687708718672,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-21-error.log",
+      "hash": "6d1204904ebadfd29589556c3b3018008564a754fbd09f0528dc352dc3074275"
     },
-    "auditLog": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\.28ed9829e81f24ac31dd28f15f8d4678610a79e1-audit.json",
-    "files": [
-        {
-            "date": 1687708718672,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-21-error.log",
-            "hash": "6d1204904ebadfd29589556c3b3018008564a754fbd09f0528dc352dc3074275"
-        },
-        {
-            "date": 1687708924217,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-22-error.log",
-            "hash": "3fc8e80059df6c57f2e87a7bb6a65d5584e30f63a5a25924f68887258dd7d0b3"
-        },
-        {
-            "date": 1687714211924,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-23-error.log",
-            "hash": "6f82cff4e5d3fb1f9fc0aaf0a94734e4e0d5c04e41b497d406f906108ca4d6e1"
-        },
-        {
-            "date": 1687752381185,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-10-error.log",
-            "hash": "c998991eebd7e416f1506df322934e3bbe28c5dc436de5cf5af144dd25fff284"
-        },
-        {
-            "date": 1687757138160,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-11-error.log",
-            "hash": "bb97446db21f9b00f0073b49078096026e84c043627619d512811d770d90d9c1"
-        },
-        {
-            "date": 1687779725598,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-17-error.log",
-            "hash": "cdcff876e8c347c18741aab583d3bd44a965860a4b0afa1e7484da0e54f6c3e4"
-        },
-        {
-            "date": 1687780841464,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-18-error.log",
-            "hash": "71df90a7a5c3bf32ee1f5a201335bd580e2cf79dfc2f8f5ded9d081e69245e3c"
-        },
-        {
-            "date": 1687794500433,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-21-error.log",
-            "hash": "3562fab2199e07f97ca84ab5b11563b231ffc4ee5b0bf4ab7634851bc56b1716"
-        },
-        {
-            "date": 1687800571767,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-23-error.log",
-            "hash": "c24f7957f872a1054d2a3c8eaed18deff5db3a1ed0ea370921433da1b78b474a"
-        },
-        {
-            "date": 1687862586079,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-27-16-error.log",
-            "hash": "0ddeb6e283020ccc8bf0967733e93b04f5b901a7b7c8769ecdac62f8963bebc6"
-        },
-        {
-            "date": 1687874881396,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-27-20-error.log",
-            "hash": "b5403bd96f528dbcea028240723606d844995d2d599d6e078538a86be52b718e"
-        },
-        {
-            "date": 1687923112235,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-09-error.log",
-            "hash": "9198d4905770181ee227bf441170501e6158c541cd7c15d1d7f879485c639db5"
-        },
-        {
-            "date": 1687932452273,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-12-error.log",
-            "hash": "eed44f2a6c9106c37726081367abab5ffdd52fb02806075023598ff941be3255"
-        },
-        {
-            "date": 1687952209884,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-17-error.log",
-            "hash": "546bf8c876c9cd7c139ad7bda46ab8df5987ea1ab7b07290c1d97b2eeda37ff0"
-        },
-        {
-            "date": 1687962946247,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-20-error.log",
-            "hash": "c4c2cf6db274a9938a0302cc75f2ad44eb5bce8081f4ccc91f048b2aac9d95a0"
-        },
-        {
-            "date": 1688095295497,
-            "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-30-09-error.log",
-            "hash": "3f5f3ce30e821aa5c8ad2d145f237cc1b0b700fd5a2d84fadf4bd83376eae845"
-        }
-    ],
-    "hashType": "sha256"
+    {
+      "date": 1687708924217,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-22-error.log",
+      "hash": "3fc8e80059df6c57f2e87a7bb6a65d5584e30f63a5a25924f68887258dd7d0b3"
+    },
+    {
+      "date": 1687714211924,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-25-23-error.log",
+      "hash": "6f82cff4e5d3fb1f9fc0aaf0a94734e4e0d5c04e41b497d406f906108ca4d6e1"
+    },
+    {
+      "date": 1687752381185,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-10-error.log",
+      "hash": "c998991eebd7e416f1506df322934e3bbe28c5dc436de5cf5af144dd25fff284"
+    },
+    {
+      "date": 1687757138160,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-11-error.log",
+      "hash": "bb97446db21f9b00f0073b49078096026e84c043627619d512811d770d90d9c1"
+    },
+    {
+      "date": 1687779725598,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-17-error.log",
+      "hash": "cdcff876e8c347c18741aab583d3bd44a965860a4b0afa1e7484da0e54f6c3e4"
+    },
+    {
+      "date": 1687780841464,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-18-error.log",
+      "hash": "71df90a7a5c3bf32ee1f5a201335bd580e2cf79dfc2f8f5ded9d081e69245e3c"
+    },
+    {
+      "date": 1687794500433,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-21-error.log",
+      "hash": "3562fab2199e07f97ca84ab5b11563b231ffc4ee5b0bf4ab7634851bc56b1716"
+    },
+    {
+      "date": 1687800571767,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-26-23-error.log",
+      "hash": "c24f7957f872a1054d2a3c8eaed18deff5db3a1ed0ea370921433da1b78b474a"
+    },
+    {
+      "date": 1687862586079,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-27-16-error.log",
+      "hash": "0ddeb6e283020ccc8bf0967733e93b04f5b901a7b7c8769ecdac62f8963bebc6"
+    },
+    {
+      "date": 1687874881396,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-27-20-error.log",
+      "hash": "b5403bd96f528dbcea028240723606d844995d2d599d6e078538a86be52b718e"
+    },
+    {
+      "date": 1687923112235,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-09-error.log",
+      "hash": "9198d4905770181ee227bf441170501e6158c541cd7c15d1d7f879485c639db5"
+    },
+    {
+      "date": 1687932452273,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-12-error.log",
+      "hash": "eed44f2a6c9106c37726081367abab5ffdd52fb02806075023598ff941be3255"
+    },
+    {
+      "date": 1687952209884,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-17-error.log",
+      "hash": "546bf8c876c9cd7c139ad7bda46ab8df5987ea1ab7b07290c1d97b2eeda37ff0"
+    },
+    {
+      "date": 1687962946247,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-28-20-error.log",
+      "hash": "c4c2cf6db274a9938a0302cc75f2ad44eb5bce8081f4ccc91f048b2aac9d95a0"
+    },
+    {
+      "date": 1688095295497,
+      "name": "F:\\Company Project\\Pro-It-Guys\\E-Commerce\\E-Commerce-uae-backend\\logs\\winston\\error\\phu-2023-06-30-09-error.log",
+      "hash": "3f5f3ce30e821aa5c8ad2d145f237cc1b0b700fd5a2d84fadf4bd83376eae845"
+    }
+  ],
+  "hashType": "sha256"
 }

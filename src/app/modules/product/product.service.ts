@@ -71,34 +71,40 @@ const getAllProduct = async (
 
   const andConditions = []
   if (searchTerm) {
-    const brand = await brandModel.findOne(
-      { name: { $regex: new RegExp(searchTerm, 'i') } },
-      '_id'
-    )
-    const type = await typeModel.findOne(
-      { name: { $regex: new RegExp(searchTerm, 'i') } },
-      '_id'
-    )
+    // const brand = await brandModel.findOne(
+    //   { name: { $regex: new RegExp(searchTerm, 'i') } },
+    //   '_id'
+    // )
+    // const type = await typeModel.findOne(
+    //   { name: { $regex: new RegExp(searchTerm, 'i') } },
+    //   '_id'
+    // )
 
-    const brandId = brand ? brand._id : null
-    const typeId = type ? type._id : null
+    // const brandId = brand ? brand._id : null
+    // const typeId = type ? type._id : null
+
+    // andConditions.push({
+    //   $or: PRODUCT_SEARCH_FIELDS.map(field => {
+    //     if (field === 'brand') {
+    //       return {
+    //         brand: brandId,
+    //       }
+    //     } else if (field === 'type') {
+    //       return {
+    //         type: typeId,
+    //       }
+    //     } else {
+    //       return {
+    //         [field]: new RegExp(searchTerm, 'i'),
+    //       }
+    //     }
+    //   }),
+    // })
 
     andConditions.push({
-      $or: PRODUCT_SEARCH_FIELDS.map(field => {
-        if (field === 'brand') {
-          return {
-            brand: brandId,
-          }
-        } else if (field === 'type') {
-          return {
-            type: typeId,
-          }
-        } else {
-          return {
-            [field]: new RegExp(searchTerm, 'i'),
-          }
-        }
-      }),
+      $or: PRODUCT_SEARCH_FIELDS.map(field => ({
+        [field]: new RegExp(searchTerm, 'i'),
+      })),
     })
   }
 
