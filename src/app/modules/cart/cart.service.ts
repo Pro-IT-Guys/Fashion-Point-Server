@@ -63,6 +63,25 @@ const updateCart = async (
   throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
 }
 
+const bulkUpdateCart = async (
+  cartId: string,
+  cartData: Partial<ICart>
+): Promise<ICart> => {
+  const isExist = await cartModel.findById(cartId)
+  if (!isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
+
+  const updatedCart = await cartModel.findByIdAndUpdate(
+    cartId,
+    { $set: { product: cartData.product } },
+    { new: true }
+  )
+
+  if (!updatedCart)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to update cart')
+
+  return updatedCart
+}
+
 const getCartByUserId = async (userId: string): Promise<ICart> => {
   const cart = await cartModel.findOne({ userId }).populate('product.productId')
 
@@ -79,6 +98,7 @@ const getCartByCartId = async (cartId: string): Promise<ICart> => {
 export const CartService = {
   addToCart,
   updateCart,
+  bulkUpdateCart,
   getCartByUserId,
   getCartByCartId,
 }
