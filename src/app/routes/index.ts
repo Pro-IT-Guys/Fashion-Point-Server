@@ -69,10 +69,6 @@ const routes = [
     path: '/review',
     route: ReviewRoute,
   },
-  // {
-  //   path: '/offer',
-  //   route: OfferRoute,
-  // },
 ]
 
 routes.forEach(route => {

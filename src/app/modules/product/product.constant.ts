@@ -6,6 +6,7 @@ export const PRODUCT_SEARCH_FIELDS = [
   'type',
 ]
 export const PRODUCT_FILTER_FIELDS = [
+  'category',
   'maxPrice',
   'minPrice',
   'buyingPrice',

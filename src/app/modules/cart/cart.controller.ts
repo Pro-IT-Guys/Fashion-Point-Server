@@ -26,6 +26,18 @@ const updateCart = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const bulkUpdateCart = catchAsync(async (req: Request, res: Response) => {
+  const cartId = req.params.id
+  const cartData = req.body
+  const cart = await CartService.bulkUpdateCart(cartId, cartData)
+
+  const responseData = {
+    data: cart,
+    message: 'Cart updated successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 const getCartByUserId = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id
   const cart = await CartService.getCartByUserId(userId)
@@ -51,6 +63,7 @@ const getCartByCartId = catchAsync(async (req: Request, res: Response) => {
 export const CartController = {
   addToCart,
   updateCart,
+  bulkUpdateCart,
   getCartByUserId,
   getCartByCartId,
 }

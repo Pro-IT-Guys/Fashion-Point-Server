@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.post('/', CartController.addToCart)
 router.patch('/:id', CartController.updateCart)
+router.patch('/bulk/:id', CartController.bulkUpdateCart)
 router.get('/user/:id', CartController.getCartByUserId)
 router.get('/:id', CartController.getCartByCartId)
 
