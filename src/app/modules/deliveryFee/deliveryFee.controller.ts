@@ -28,6 +28,15 @@ const updateFee = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const getAllFees = catchAsync(async (req: Request, res: Response) => {
+  const data = await DeliveryFeeService.getAllFees()
+  const responseData = {
+    data,
+    message: 'Delivery fee fetched successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 const getFeeOfLocation = catchAsync(async (req: Request, res: Response) => {
   const { countryId, stateCode, city_name } = req.body
 
@@ -51,5 +60,6 @@ const getFeeOfLocation = catchAsync(async (req: Request, res: Response) => {
 export const DeliveryFeeController = {
   createFee,
   updateFee,
+  getAllFees,
   getFeeOfLocation,
 }

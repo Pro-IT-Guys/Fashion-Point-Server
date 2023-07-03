@@ -144,6 +144,14 @@ const updateFee = async (
   }
 }
 
+const getAllFees = async (): Promise<ICountry[]> => {
+  const data = await deliveryFeeModel.find()
+  if (!data) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No data found')
+  }
+  return data
+}
+
 const getFeeOfLocation = async (
   countryId: string,
   stateCode: string,
@@ -189,5 +197,6 @@ const getFeeOfLocation = async (
 export const DeliveryFeeService = {
   CreateFee,
   updateFee,
+  getAllFees,
   getFeeOfLocation,
 }
