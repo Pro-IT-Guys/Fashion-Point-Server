@@ -115,7 +115,7 @@ const storage = multer.diskStorage({
 })
 
 const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const maxSize = 4 * 1024 * 1024 // 4MB
+  const maxSize = 10 * 1024 * 1024 // 10MB
 
   const upload = multer({
     storage,

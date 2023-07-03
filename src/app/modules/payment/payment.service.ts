@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Stripe from 'stripe'
-import paypal, { Payment } from 'paypal-rest-sdk'
+import paypal, { Payment, payment } from 'paypal-rest-sdk'
 import config from '../../../config'
 import orderModel from '../order/order.model'
 import { IOrder } from '../order/order.interface'
@@ -22,7 +22,6 @@ const stripePayment = async (
   if (!order) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
   }
-
   // Fetch the payment method details from Stripe
   const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId)
 
