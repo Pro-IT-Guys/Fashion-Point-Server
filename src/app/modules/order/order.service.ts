@@ -8,6 +8,8 @@ import {
 } from '../../../interfaces/sharedInterface'
 import { ORDER_SEARCH_FIELDS } from './order.constant'
 import paginationHelper from '../../helpers/paginationHelper'
+import ApiError from '../../../errors/ApiError'
+import httpStatus from 'http-status'
 
 const createOrder = async (orderData: IOrder): Promise<IOrder> => {
   const { userId, orderItems, shippingAddress, ...rest } = orderData
@@ -96,7 +98,23 @@ const getAllOrder = async (
   return responseData
 }
 
+const updateOrder = async (orderId: string, orderData: Partial<IOrder>) => {
+  const isExist = await orderModel.findOne({ _id: orderId })
+  if (!isExist) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+
+  const updatedOrder = await orderModel.findOneAndUpdate(
+    { _id: orderId },
+    orderData,
+    { new: true }
+  )
+
+  if (!updatedOrder)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Order not updated')
+  return updatedOrder
+}
+
 export const OrderService = {
   createOrder,
   getAllOrder,
+  updateOrder,
 }
