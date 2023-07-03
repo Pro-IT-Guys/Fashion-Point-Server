@@ -43,7 +43,7 @@ const userSchema = new Schema<IUser>(
       enum: USER_ROLE_ARRAY,
       required: true,
     },
-    address: {
+    zipCode: {
       type: String,
     },
     shippingAddress: {
