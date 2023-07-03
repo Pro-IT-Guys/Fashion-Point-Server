@@ -81,6 +81,7 @@ const getAllOrder = async (
 
   const result = await orderModel
     .find(whereCondition)
+    .populate('userId')
     .sort(sortCondition)
     .skip(skip)
     .limit(limit as number)
