@@ -1,7 +1,13 @@
-import mongoose from 'mongoose'
-import { IOrder } from './order.interface'
+import mongoose, { SortOrder } from 'mongoose'
+import { IOrder, IOrderFilters } from './order.interface'
 import { DeliveryFeeService } from '../deliveryFee/deliveryFee.service'
 import orderModel from './order.model'
+import {
+  IGenericDataWithMeta,
+  IPaginationOption,
+} from '../../../interfaces/sharedInterface'
+import { ORDER_SEARCH_FIELDS } from './order.constant'
+import paginationHelper from '../../helpers/paginationHelper'
 
 const createOrder = async (orderData: IOrder): Promise<IOrder> => {
   const { userId, orderItems, shippingAddress, ...rest } = orderData
@@ -45,6 +51,52 @@ const createOrder = async (orderData: IOrder): Promise<IOrder> => {
   }
 }
 
+const getAllOrder = async (
+  filters: IOrderFilters,
+  paginationOption: IPaginationOption
+): Promise<IGenericDataWithMeta<IOrder[]>> => {
+  const { searchTerm } = filters
+
+  const andConditions = []
+  if (searchTerm) {
+    andConditions.push({
+      $or: ORDER_SEARCH_FIELDS.map(field => ({
+        [field]: new RegExp(searchTerm, 'i'),
+      })),
+    })
+  }
+
+  const whereCondition = andConditions.length ? { $and: andConditions } : {}
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper(paginationOption)
+
+  const sortCondition: { [key: string]: SortOrder } = {}
+
+  if (sortBy && sortOrder) {
+    sortCondition[sortBy] = sortOrder
+  }
+
+  const result = await orderModel
+    .find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit as number)
+  const total = await orderModel.countDocuments()
+
+  const responseData = {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
+
+  return responseData
+}
+
 export const OrderService = {
   createOrder,
+  getAllOrder,
 }

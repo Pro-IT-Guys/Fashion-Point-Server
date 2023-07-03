@@ -91,7 +91,7 @@ const getAllProduct = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     meta: result.meta || {},
     data: result.data || [],
-    message: 'All users fetched successfully',
+    message: 'All Product fetched successfully',
   }
 
   sendSuccessResponse(res, responseData)
