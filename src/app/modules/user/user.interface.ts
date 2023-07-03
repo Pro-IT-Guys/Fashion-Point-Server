@@ -13,9 +13,9 @@ export interface IUser {
   phone?: string
   email: string
   role: USER_ROLE_ENUM
-  address?: string
   shippingAddress?: IShippingAddress
   verificationCode: string
+  zipCode?: string
   codeGenerationTimestamp: string
   isVerified: boolean
 }
