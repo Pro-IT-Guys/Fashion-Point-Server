@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Model } from 'mongoose'
 import { USER_ROLE_ENUM } from './user.constant'
+import { IShippingAddress } from '../order/order.interface'
 
 export interface IUser {
   name: {
@@ -13,7 +14,7 @@ export interface IUser {
   email: string
   role: USER_ROLE_ENUM
   address?: string
-  shippingAddress?: string
+  shippingAddress?: IShippingAddress
   verificationCode: string
   codeGenerationTimestamp: string
   isVerified: boolean
