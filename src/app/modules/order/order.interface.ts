@@ -26,11 +26,15 @@ export interface IOrder {
   subTotal: number
   paymentMethod?: string
   paymentId?: string
-  isPaid: boolean
+  isPaid: string
   paidAt?: Date
   deliveryAt?: Date
 }
 
 export interface IOrderModel extends Model<IOrder> {
   getOrderById(id: string): Promise<IOrder>
+}
+
+export interface IOrderFilters {
+  searchTerm?: string
 }

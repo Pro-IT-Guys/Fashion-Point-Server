@@ -7,6 +7,8 @@ import paginationHelper from '../../helpers/paginationHelper'
 import { USER_SEARCH_FIELDS } from './user.constant'
 import { IUser, IUserFilters } from './user.interface'
 import userModel from './user.model'
+import ApiError from '../../../errors/ApiError'
+import httpStatus from 'http-status'
 
 const getAllUsers = async (
   filters: IUserFilters,
@@ -69,6 +71,28 @@ const getAllUsers = async (
   return responseData
 }
 
+const updateUser = async (
+  userId: string,
+  userData: Partial<IUser>
+): Promise<IUser> => {
+  const isExist = await userModel.findOne({ _id: userId })
+  if (!isExist) throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+
+  const updatedUser = await userModel.findOneAndUpdate(
+    { _id: userId },
+    userData,
+    { new: true }
+  )
+
+  if (!updatedUser)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'USomething went wrong to update user'
+    )
+  return updatedUser
+}
+
 export const UserService = {
   getAllUsers,
+  updateUser,
 }
