@@ -41,7 +41,7 @@ const stripePayment = async (
 
   // Check if the payment was successful
   if (paymentIntent.status === 'succeeded') {
-    order.isPaid = true
+    order.isPaid = 'yes'
     order.paidAt = new Date()
 
     // Set the payment method string to the order.paymentMethod field

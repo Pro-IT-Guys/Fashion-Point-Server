@@ -113,8 +113,15 @@ const updateOrder = async (orderId: string, orderData: Partial<IOrder>) => {
   return updatedOrder
 }
 
+const getOrderByUserId = async (userId: string): Promise<IOrder[]> => {
+  const orders = await orderModel.find({ userId })
+  if (!orders) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+  return orders
+}
+
 export const OrderService = {
   createOrder,
   getAllOrder,
   updateOrder,
+  getOrderByUserId,
 }
