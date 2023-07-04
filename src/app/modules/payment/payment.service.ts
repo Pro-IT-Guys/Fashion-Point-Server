@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Stripe from 'stripe'
-import paypal, { Payment, payment } from 'paypal-rest-sdk'
+import paypal, { Payment } from 'paypal-rest-sdk'
 import config from '../../../config'
 import orderModel from '../order/order.model'
 import { IOrder } from '../order/order.interface'
