@@ -41,7 +41,10 @@ const createOrder = async (orderData: IOrder): Promise<IOrder> => {
         deliveryFee,
         ...rest,
       })
-    ).populate('orderItems.product')
+    ).populate([
+      { path: 'userId' },
+      { path: 'orderItems.product', model: productModel },
+    ])
 
     await session.commitTransaction()
     session.endSession()
@@ -82,7 +85,10 @@ const getAllOrder = async (
 
   const result = await orderModel
     .find(whereCondition)
-    .populate('userId')
+    .populate([
+      { path: 'userId' },
+      { path: 'orderItems.product', model: productModel },
+    ])
     .sort(sortCondition)
     .skip(skip)
     .limit(limit as number)
@@ -104,11 +110,12 @@ const updateOrder = async (orderId: string, orderData: Partial<IOrder>) => {
   const isExist = await orderModel.findOne({ _id: orderId })
   if (!isExist) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
 
-  const updatedOrder = await orderModel.findOneAndUpdate(
-    { _id: orderId },
-    orderData,
-    { new: true }
-  )
+  const updatedOrder = await orderModel
+    .findOneAndUpdate({ _id: orderId }, orderData, { new: true })
+    .populate([
+      { path: 'userId' },
+      { path: 'orderItems.product', model: productModel },
+    ])
 
   if (!updatedOrder)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Order not updated')
@@ -130,7 +137,12 @@ const getOrderByUserId = async (userId: string): Promise<IOrder[]> => {
 }
 
 const getOrderByOrderId = async (orderId: string): Promise<IOrder> => {
-  const order = await orderModel.findById(orderId).populate('userId')
+  const order = await orderModel
+    .findById(orderId)
+    .populate([
+      { path: 'userId' },
+      { path: 'orderItems.product', model: productModel },
+    ])
   if (!order) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
   return order
 }
