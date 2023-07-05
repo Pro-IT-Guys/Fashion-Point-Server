@@ -10,6 +10,7 @@ import { ORDER_SEARCH_FIELDS } from './order.constant'
 import paginationHelper from '../../helpers/paginationHelper'
 import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
+import productModel from '../product/product.model'
 
 const createOrder = async (orderData: IOrder): Promise<IOrder> => {
   const { userId, orderItems, shippingAddress, ...rest } = orderData
@@ -115,8 +116,16 @@ const updateOrder = async (orderId: string, orderData: Partial<IOrder>) => {
 }
 
 const getOrderByUserId = async (userId: string): Promise<IOrder[]> => {
-  const orders = await orderModel.find({ userId }).populate('userId')
+  const orders = await orderModel
+    .find({ userId })
+    .populate([
+      { path: 'userId' },
+      { path: 'orderItems.product', model: productModel },
+    ])
+    .exec()
+
   if (!orders) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+
   return orders
 }
 
