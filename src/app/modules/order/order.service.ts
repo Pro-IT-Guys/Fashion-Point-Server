@@ -115,13 +115,13 @@ const updateOrder = async (orderId: string, orderData: Partial<IOrder>) => {
 }
 
 const getOrderByUserId = async (userId: string): Promise<IOrder[]> => {
-  const orders = await orderModel.find({ userId })
+  const orders = await orderModel.find({ userId }).populate('userId')
   if (!orders) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
   return orders
 }
 
 const getOrderByOrderId = async (orderId: string): Promise<IOrder> => {
-  const order = await orderModel.findById(orderId)
+  const order = await orderModel.findById(orderId).populate('userId')
   if (!order) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
   return order
 }
