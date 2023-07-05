@@ -54,9 +54,20 @@ const getOrderByUserId = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const getOrderByOrderId = catchAsync(async (req: Request, res: Response) => {
+  const orderId = req.params.id
+  const data = await OrderService.getOrderByOrderId(orderId)
+  const responseData = {
+    data,
+    message: 'Order fetched successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 export const OrderController = {
   createOrder,
   getAllOrder,
   updateOrder,
   getOrderByUserId,
+  getOrderByOrderId,
 }

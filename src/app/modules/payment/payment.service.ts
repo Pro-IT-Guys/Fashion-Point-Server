@@ -22,7 +22,6 @@ const stripePayment = async (
   if (!order) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
   }
-
   // Fetch the payment method details from Stripe
   const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId)
 
