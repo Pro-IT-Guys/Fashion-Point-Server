@@ -1,5 +1,5 @@
 import mongoose, { SortOrder } from 'mongoose'
-import { IOrder, IOrderFilters } from './order.interface'
+import { IOrder, IOrderFilters, IShippingAddress } from './order.interface'
 import { DeliveryFeeService } from '../deliveryFee/deliveryFee.service'
 import orderModel from './order.model'
 import {
@@ -26,7 +26,7 @@ const createOrder = async (orderData: IOrder): Promise<IOrder> => {
       state,
       city as string
     )
-    const deliveryFee = deliveryFeeData.delivery_fee
+    // const deliveryFee = deliveryFeeData.delivery_fee
     shippingAddress.country = deliveryFeeData.country
     shippingAddress.state = deliveryFeeData.state_name
     if (deliveryFeeData.city_name) {
@@ -38,7 +38,6 @@ const createOrder = async (orderData: IOrder): Promise<IOrder> => {
         userId,
         orderItems,
         shippingAddress,
-        deliveryFee,
         ...rest,
       })
     ).populate([
@@ -109,6 +108,21 @@ const getAllOrder = async (
 const updateOrder = async (orderId: string, orderData: Partial<IOrder>) => {
   const isExist = await orderModel.findOne({ _id: orderId })
   if (!isExist) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+
+  if (orderData.shippingAddress) {
+    const { country, state, city } =
+      orderData.shippingAddress as IShippingAddress
+    const deliveryFeeData = await DeliveryFeeService.getFeeOfLocation(
+      country,
+      state,
+      city as string
+    )
+    orderData.shippingAddress.country = deliveryFeeData.country
+    orderData.shippingAddress.state = deliveryFeeData.state_name
+    if (deliveryFeeData.city_name) {
+      orderData.shippingAddress.city = deliveryFeeData.city_name
+    }
+  }
 
   const updatedOrder = await orderModel
     .findOneAndUpdate({ _id: orderId }, orderData, { new: true })
