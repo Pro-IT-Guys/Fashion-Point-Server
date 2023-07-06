@@ -60,10 +60,37 @@ const getCartByCartId = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const deleteCart = catchAsync(async (req: Request, res: Response) => {
+  const cartId = req.params.id
+  const cart = await CartService.deleteCart(cartId)
+
+  const responseData = {
+    data: cart,
+    message: 'Cart deleted successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
+const deleteAProductFromCart = catchAsync(
+  async (req: Request, res: Response) => {
+    const cartId = req.params.id
+    const productId = req.params.productId
+    const cart = await CartService.deleteAProductFromCart(cartId, productId)
+
+    const responseData = {
+      data: cart,
+      message: 'Product deleted successfully',
+    }
+    sendSuccessResponse(res, responseData)
+  }
+)
+
 export const CartController = {
   addToCart,
   updateCart,
   bulkUpdateCart,
   getCartByUserId,
   getCartByCartId,
+  deleteCart,
+  deleteAProductFromCart,
 }

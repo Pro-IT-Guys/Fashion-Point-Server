@@ -8,5 +8,7 @@ router.patch('/:id', CartController.updateCart)
 router.patch('/bulk/:id', CartController.bulkUpdateCart)
 router.get('/user/:id', CartController.getCartByUserId)
 router.get('/:id', CartController.getCartByCartId)
+router.delete('/remove/:id/:productId', CartController.deleteAProductFromCart)
+router.delete('/:id', CartController.deleteCart)
 
 export const CartRoute = router
