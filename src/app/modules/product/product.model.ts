@@ -72,7 +72,7 @@ const productSchema = new Schema<IProduct>(
       required: true,
     },
     brand: {
-      type: [String],
+      type: String,
       required: true,
     },
     review: {
@@ -83,7 +83,11 @@ const productSchema = new Schema<IProduct>(
       required: true,
     },
     style: {
-      type: [String],
+      type: String,
+      required: true,
+    },
+    fabric: {
+      type: String,
       required: true,
     },
   },

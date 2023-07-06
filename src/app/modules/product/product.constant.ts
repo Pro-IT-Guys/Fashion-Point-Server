@@ -4,6 +4,8 @@ export const PRODUCT_SEARCH_FIELDS = [
   'tag',
   'brand',
   'type',
+  'style',
+  'fabric',
 ]
 export const PRODUCT_FILTER_FIELDS = [
   'category',
@@ -13,6 +15,13 @@ export const PRODUCT_FILTER_FIELDS = [
   'sellingPrice',
   'minRating',
   'maxRating',
+  'color',
+  'size',
+  'tag',
+  'brand',
+  'type',
+  'style',
+  'fabric',
 ]
 
 export const IMAGE_URL = `http://localhost:8000/images/product`

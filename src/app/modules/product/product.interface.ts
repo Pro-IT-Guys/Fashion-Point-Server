@@ -13,13 +13,14 @@ export interface IProduct {
   metaDescription: string
   quantity: number
   category: string
-  color: string[] // color code hex
+  color: string[]
   size: string[]
   tag: string[]
-  brand: string[]
+  brand: string
   review?: Schema.Types.ObjectId[] // productReview id ref
   type: string[]
-  style: string[]
+  style: string
+  fabric: string
 }
 
 export interface IProductModel extends Model<IProduct> {
