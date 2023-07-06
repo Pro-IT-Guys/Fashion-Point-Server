@@ -121,6 +121,16 @@ const getProductByPath = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const getProductBySku = catchAsync(async (req: Request, res: Response) => {
+  const productSku = req.params.sku
+  const product = await ProductService.getProductBySku(productSku)
+  const responseData = {
+    message: 'Product fetched successfully',
+    data: product,
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 const deleteProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id
 
@@ -139,5 +149,6 @@ export const ProductController = {
   getAllProduct,
   getProductById,
   getProductByPath,
+  getProductBySku,
   deleteProduct,
 }
