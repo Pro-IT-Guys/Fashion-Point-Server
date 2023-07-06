@@ -19,6 +19,14 @@ const cartSchema = new Schema<ICart>(
           type: Number,
           required: true,
         },
+        color: {
+          type: String,
+          required: true,
+        },
+        size: {
+          type: String,
+          required: true,
+        },
       },
     ],
   },
