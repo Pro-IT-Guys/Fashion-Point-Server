@@ -54,12 +54,19 @@ const orderSchema = new Schema<IOrder>(
       city: {
         type: String,
       },
+      zipCode: {
+        type: String,
+      },
       address_line: {
         type: String,
       },
     },
     deliveryFee: {
       type: Number,
+    },
+    currency: {
+      type: String,
+      default: 'AED',
     },
     deliveryStatus: {
       type: String,
@@ -71,7 +78,7 @@ const orderSchema = new Schema<IOrder>(
     },
     paymentMethod: {
       type: String,
-      required: true,
+      default: 'Cash on delivery',
     },
     paymentId: {
       type: String,

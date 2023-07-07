@@ -19,9 +19,10 @@ const stripePayment = async (
 ): Promise<IOrder> => {
   const order = await orderModel.findById(orderId)
 
-  if (!order) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
-  }
+  if (!order) throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
+  if (order.isPaid === 'yes')
+    throw new ApiError(httpStatus.BAD_REQUEST, 'You have already paid')
+
   // Fetch the payment method details from Stripe
   const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId)
 
@@ -74,6 +75,8 @@ const paypalPayment = async (
   if (!order) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Order not found')
   }
+  if (order.isPaid === 'yes')
+    throw new ApiError(httpStatus.BAD_REQUEST, 'You have already paid')
 
   // Create a PayPal payment object
   const paymentData = {

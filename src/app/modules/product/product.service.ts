@@ -118,6 +118,17 @@ const getAllProduct = async (
             $lte: value,
           },
         }
+      } else if (
+        key === 'color' ||
+        key === 'size' ||
+        key === 'tag' ||
+        key == 'type'
+      ) {
+        return {
+          [key]: {
+            $in: value,
+          },
+        }
       } else {
         return {
           [key]: value,

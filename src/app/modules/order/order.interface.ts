@@ -2,7 +2,7 @@
 import { Model, Types } from 'mongoose'
 
 export interface IOrderItem {
-  product: string
+  product: Types.ObjectId
   quantity: number
   color: string
   size: string
@@ -12,6 +12,7 @@ export interface IShippingAddress {
   country: string
   state: string
   city?: string
+  zipCode?: string
   address_line?: string
 }
 
@@ -22,6 +23,7 @@ export interface IOrder {
   email: string
   shippingAddress: IShippingAddress
   deliveryFee?: number // get from db
+  currency?: string
   deliveryStatus?: string // get from db
   subTotal: number
   paymentMethod?: string

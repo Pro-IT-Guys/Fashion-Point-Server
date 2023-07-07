@@ -95,10 +95,55 @@ const getCartByCartId = async (cartId: string): Promise<ICart> => {
   return cart
 }
 
+const deleteCart = async (cartId: string): Promise<ICart> => {
+  const cart = await cartModel.findByIdAndDelete(cartId)
+  if (!cart) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
+  return cart
+}
+
+const deleteAProductFromCart = async (
+  cartId: string,
+  productId: string
+): Promise<ICart> => {
+  const cart = await cartModel.findById(cartId)
+  if (!cart) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
+
+  const existingCart = await cartModel
+    .findById(cartId)
+    .populate('product.productId')
+
+  if (existingCart) {
+    const existingProductIndex = existingCart.product.findIndex(item =>
+      item.productId.equals(productId)
+    )
+
+    if (existingProductIndex !== -1) {
+      existingCart.product.splice(existingProductIndex, 1)
+    }
+
+    const cart = await cartModel
+      .findByIdAndUpdate(
+        cartId,
+        { product: existingCart.product },
+        { new: true }
+      )
+      .populate('product.productId')
+
+    if (!cart)
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to update cart')
+
+    return cart
+  }
+
+  throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
+}
+
 export const CartService = {
   addToCart,
   updateCart,
   bulkUpdateCart,
   getCartByUserId,
   getCartByCartId,
+  deleteCart,
+  deleteAProductFromCart,
 }
