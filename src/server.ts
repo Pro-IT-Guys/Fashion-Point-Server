@@ -5,6 +5,9 @@ import app from './app'
 import config from './config'
 import { errorLogger, successLogger } from './shared/logger'
 import { Server } from 'http'
+import offerModel from './app/modules/offer/offer.model'
+import { scheduleCronJobs } from './app/helpers/cornJobs'
+import { IAddId } from './app/modules/offer/offer.interface'
 
 let server: Server
 
@@ -97,11 +100,27 @@ async function databaseConnection() {
       successLogger.info('Database connected successfully')
     }
 
-    server = app.listen(config.port, () => {
+    server = app.listen(config.port, async () => {
       if (config.env === 'development') {
         console.log(`Server is listening on port ${config.port}`)
       } else {
         successLogger.info(`Server is listening on port ${config.port}`)
+      }
+
+      const currentDate = new Date()
+      const nearestOffer = await offerModel
+        .findOne({ startFrom: { $gte: currentDate } })
+        .sort({ startFrom: 1 })
+        .exec()
+
+      if (nearestOffer) {
+        // Schedule the cron jobs with the nearest offer data
+        scheduleCronJobs(nearestOffer as unknown as Partial<IAddId>)
+        console.log(
+          `Cron jobs scheduled successfully and will execute at ${nearestOffer.startFrom}`
+        )
+      } else {
+        console.log('No nearest offer found.')
       }
     })
   } catch (error) {

@@ -41,6 +41,10 @@ const productSchema = new Schema<IProduct>(
       type: Number,
       required: true,
     },
+    discountPrice: {
+      type: Number,
+      default: 0,
+    },
     description: {
       type: String,
       required: true,
@@ -89,6 +93,10 @@ const productSchema = new Schema<IProduct>(
     fabric: {
       type: String,
       required: true,
+    },
+    isVisibleOffer: {
+      type: Boolean,
+      default: false,
     },
   },
   {

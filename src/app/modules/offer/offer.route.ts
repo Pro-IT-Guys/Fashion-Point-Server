@@ -1,8 +1,9 @@
-// import express from 'express'
-// import { offerController } from './offer.controller'
+import express from 'express'
+import { offerController } from './offer.controller'
 
-// const router = express.Router()
+const router = express.Router()
 
-// router.post('/', offerController.createOffer)
+router.post('/', offerController.createOffer)
+router.get('/:id', offerController.getOfferById)
 
-// export const OfferRoute = router
+export const OfferRoute = router

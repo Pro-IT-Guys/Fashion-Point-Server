@@ -1,87 +1,78 @@
-// import httpStatus from 'http-status'
-// import ApiError from '../../../errors/ApiError'
-// import { IOffer } from './offer.interface'
-// import offerModel from './offer.model'
-// import mongoose from 'mongoose'
+import httpStatus from 'http-status'
+import ApiError from '../../../errors/ApiError'
+import { IAddId, IOffer } from './offer.interface'
+import offerModel from './offer.model'
+import mongoose from 'mongoose'
 
-// import cron from 'node-cron'
-// import productModel from '../product/product.model'
+import productModel from '../product/product.model'
+import { scheduleCronJobs } from '../../helpers/cornJobs'
 
-// const createOffer = async (offerData: IOffer): Promise<IOffer> => {
-//   const { startFrom, endAt } = offerData
+const createOffer = async (offerData: IOffer): Promise<IOffer> => {
+  const { startFrom, endAt } = offerData
 
-//   const existingOffer = await offerModel.findOne({
-//     $or: [
-//       { startFrom: { $gte: startFrom, $lte: endAt } },
-//       { endAt: { $gte: startFrom, $lte: endAt } },
-//       {
-//         $and: [{ startFrom: { $lte: startFrom } }, { endAt: { $gte: endAt } }],
-//       },
-//     ],
-//   })
+  const existingOffer = await offerModel.findOne({
+    $or: [
+      { startFrom: { $gte: startFrom, $lte: endAt } },
+      { endAt: { $gte: startFrom, $lte: endAt } },
+      {
+        $and: [{ startFrom: { $lte: startFrom } }, { endAt: { $gte: endAt } }],
+      },
+    ],
+  })
 
-//   if (existingOffer) {
-//     throw new ApiError(
-//       httpStatus.BAD_REQUEST,
-//       'An offer already exists within the specified date range'
-//     )
-//   }
+  if (existingOffer) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'An offer already exists within the specified date range'
+    )
+  }
 
-//   const session = await mongoose.startSession()
-//   session.startTransaction()
+  const session = await mongoose.startSession()
 
-//   try {
-//     const offer = await offerModel.create(offerData, { session })
+  try {
+    session.startTransaction()
 
-//     if (!offer) {
-//       throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to create offer')
-//     }
+    const createdOfferArray = await offerModel.create([offerData], { session })
+    const offer: IAddId = createdOfferArray[0].toObject()
 
-//     const updatedProducts = await productModel.updateMany(
-//       { _id: { $in: offer.product } },
-//       { $set: { price: offer.discountPrice, isVisible: true } }
-//     )
+    if (!offer) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to create offer')
+    }
 
-//     if (updatedProducts.nModified <= 0) {
-//       throw new ApiError(
-//         httpStatus.BAD_REQUEST,
-//         'Unable to update product prices'
-//       )
-//     }
+    const updatedProducts = await productModel.updateMany(
+      { _id: { $in: offer.product } },
+      { $set: { discountPrice: offer.discountPrice, isVisible: true } }
+    )
 
-//     await session.commitTransaction()
-//     await session.endSession()
+    if (updatedProducts.modifiedCount <= 0) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        'Unable to update product prices'
+      )
+    }
 
-//     cron.schedule(endAt.toString(), async () => {
-//       const originalProducts = await productModel.updateMany(
-//         { _id: { $in: offer.product } },
-//         { $set: { price: '$originalPrice', isVisible: false } }
-//       )
+    await session.commitTransaction()
+    session.endSession()
 
-//       if (originalProducts.nModified <= 0) {
-//         console.error('Failed to restore original product prices.')
-//       }
-//     })
+    // Schedule cron jobs after the offer has been created and the transaction committed
+    scheduleCronJobs(offer)
 
-//     cron.schedule(startFrom.toString(), async () => {
-//       const updatedProducts = await productModel.updateMany(
-//         { _id: { $in: offer.product } },
-//         { $set: { price: offer.discount, isVisible: true } }
-//       )
+    return offer
+  } catch (error) {
+    session.endSession()
+    throw error
+  }
+}
 
-//       if (updatedProducts.nModified <= 0) {
-//         console.error('Failed to update product prices.')
-//       }
-//     })
+const getOfferById = async (id: string): Promise<IOffer> => {
+  const offer = await offerModel.findById(id)
+  if (!offer) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Offer not found')
+  }
+  return offer
+}
 
-//     return offer
-//   } catch (error) {
-//     await session.abortTransaction()
-//     await session.endSession()
-//     throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to create offer')
-//   }
-// }
-
-// export const offerService = {
-//   createOffer,
-// }
+export const offerService = {
+  createOffer,
+  getOfferById,
+}

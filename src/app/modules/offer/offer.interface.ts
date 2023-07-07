@@ -10,6 +10,10 @@ export interface IOffer {
   isVisible: boolean
 }
 
+export interface IAddId extends IOffer {
+  _id: string
+}
+
 export interface IOfferModel extends Model<IOffer> {
   getOfferById(id: string): Promise<IOffer>
 }
