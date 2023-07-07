@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import mongoose from 'mongoose'
 import app from './app'
@@ -32,6 +33,15 @@ io.on('connection', (socket: any) => {
 
     if (receiverSocketId) {
       io.to(receiverSocketId).emit('getMessage', data)
+    }
+  })
+
+  // Get cart data from client
+  socket.on('cartData', (data: any) => {
+    const receiverId = data.data.userId
+    const receiverSocketId = activeUsers.get(receiverId)
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit('getCartData', data.data)
     }
   })
 
