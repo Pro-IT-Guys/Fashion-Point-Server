@@ -10,6 +10,7 @@ const cartSchema = new Schema<ICart>(
     },
     product: [
       {
+        _id: false,
         productId: {
           type: Schema.Types.ObjectId,
           ref: 'Product',

@@ -5,7 +5,7 @@ import cartModel from './cart.model'
 
 const addToCart = async (cartData: ICart): Promise<ICart> => {
   const isExist = await cartModel.findOne({ userId: cartData.userId })
-  if (isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart already exist')
+  if (isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart already exists')
 
   const cart = await cartModel.create(cartData)
   await cart.populate('product.productId')
@@ -84,6 +84,7 @@ const bulkUpdateCart = async (
 
 const getCartByUserId = async (userId: string): Promise<ICart> => {
   const cart = await cartModel.findOne({ userId }).populate('product.productId')
+  console.log(cart)
 
   if (!cart) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
   return cart

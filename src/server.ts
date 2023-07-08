@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import mongoose from 'mongoose'
 import app from './app'
 import config from './config'
 import { errorLogger, successLogger } from './shared/logger'
 import { Server } from 'http'
+import offerModel from './app/modules/offer/offer.model'
+import { scheduleCronJobs } from './app/helpers/cornJobs'
+import { IAddId } from './app/modules/offer/offer.interface'
 
 let server: Server
 
@@ -32,6 +36,15 @@ io.on('connection', (socket: any) => {
 
     if (receiverSocketId) {
       io.to(receiverSocketId).emit('getMessage', data)
+    }
+  })
+
+  // Get cart data from client
+  socket.on('cartData', (data: any) => {
+    const receiverId = data.data.userId
+    const receiverSocketId = activeUsers.get(receiverId)
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit('getCartData', data.data)
     }
   })
 
@@ -87,11 +100,27 @@ async function databaseConnection() {
       successLogger.info('Database connected successfully')
     }
 
-    server = app.listen(config.port, () => {
+    server = app.listen(config.port, async () => {
       if (config.env === 'development') {
         console.log(`Server is listening on port ${config.port}`)
       } else {
         successLogger.info(`Server is listening on port ${config.port}`)
+      }
+
+      const currentDate = new Date()
+      const nearestOffer = await offerModel
+        .findOne({ startFrom: { $gte: currentDate } })
+        .sort({ startFrom: 1 })
+        .exec()
+
+      if (nearestOffer) {
+        // Schedule the cron jobs with the nearest offer data
+        scheduleCronJobs(nearestOffer as unknown as Partial<IAddId>)
+        console.log(
+          `Cron jobs scheduled successfully and will execute at ${nearestOffer.startFrom}`
+        )
+      } else {
+        console.log('No nearest offer found.')
       }
     })
   } catch (error) {

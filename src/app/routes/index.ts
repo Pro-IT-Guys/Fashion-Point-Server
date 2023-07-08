@@ -12,6 +12,7 @@ import { ChatRoute } from '../modules/chat/chat.route'
 import { MessageRoute } from '../modules/Message/message.route'
 import { CartRoute } from '../modules/cart/cart.route'
 import { ReviewRoute } from '../modules/review/review.route'
+import { OfferRoute } from '../modules/offer/offer.route'
 // import { OfferRoute } from '../modules/offer/offer.route'
 
 const router = express.Router()
@@ -68,6 +69,10 @@ const routes = [
   {
     path: '/review',
     route: ReviewRoute,
+  },
+  {
+    path: '/offer',
+    route: OfferRoute,
   },
 ]
 

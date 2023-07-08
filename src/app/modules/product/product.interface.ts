@@ -9,6 +9,7 @@ export interface IProduct {
   restImage?: string[]
   buyingPrice: number
   sellingPrice: number
+  discountPrice: number
   description: string
   metaDescription: string
   quantity: number
@@ -21,6 +22,7 @@ export interface IProduct {
   type: string[]
   style: string
   fabric: string
+  isVisibleOffer: boolean
 }
 
 export interface IProductModel extends Model<IProduct> {
