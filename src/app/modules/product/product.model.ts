@@ -48,8 +48,6 @@ const productSchema = new Schema<IProduct>(
     description: {
       type: String,
       required: true,
-      minlength: 10,
-      maxlength: 1000,
     },
     metaDescription: {
       type: String,
