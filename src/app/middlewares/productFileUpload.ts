@@ -131,7 +131,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
   upload(req, res, async error => {
     if (error instanceof multer.MulterError) {
       if (error.code === 'LIMIT_FILE_SIZE') {
-        error.message = 'File size exceeds the allowed limit of 2MB.'
+        error.message = 'File size exceeds the allowed limit of 10MB.'
       }
     }
 
@@ -204,7 +204,10 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     // Convert restImage files to WebP
     if (uploadedFiles?.restImage) {
-      const restImages = uploadedFiles.restImage
+      const restImages = Array.isArray(uploadedFiles.restImage)
+        ? uploadedFiles.restImage
+        : [uploadedFiles.restImage]
+
       await Promise.all(
         restImages.map(async (image: Express.Multer.File) => {
           const restImagePath = image.path
