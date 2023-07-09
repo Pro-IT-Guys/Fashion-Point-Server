@@ -125,7 +125,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
   }).fields([
     { name: 'frontImage', maxCount: 1 },
     { name: 'backImage', maxCount: 1 },
-    { name: 'restImage', maxCount: 10 },
+    // { name: 'restImage', maxCount: 10 },
   ])
 
   upload(req, res, async error => {
@@ -203,39 +203,39 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
     }
 
     // Convert restImage files to WebP
-    if (uploadedFiles?.restImage) {
-      const restImages = uploadedFiles.restImage
-      await Promise.all(
-        restImages.map(async (image: Express.Multer.File) => {
-          const restImagePath = image.path
-          const restImageExtension = path.extname(restImagePath).toLowerCase()
-          const restImageWebPPath = path.join(
-            path.dirname(restImagePath),
-            `${path.basename(restImagePath, restImageExtension)}.webp`
-          )
+    // if (uploadedFiles?.restImage) {
+    //   const restImages = uploadedFiles.restImage
+    //   await Promise.all(
+    //     restImages.map(async (image: Express.Multer.File) => {
+    //       const restImagePath = image.path
+    //       const restImageExtension = path.extname(restImagePath).toLowerCase()
+    //       const restImageWebPPath = path.join(
+    //         path.dirname(restImagePath),
+    //         `${path.basename(restImagePath, restImageExtension)}.webp`
+    //       )
 
-          // Check if the restImage is already in WebP format
-          if (restImageExtension === '.webp') {
-            // Skip conversion, use the original WebP image
-            fs.rename(restImagePath, restImageWebPPath, error => {
-              if (error) {
-                console.error('Failed to rename the file:', error)
-              }
-            })
-          } else {
-            // Convert restImage to WebP
-            await sharp(restImagePath)
-              .toFormat('webp')
-              .toFile(restImageWebPPath)
+    //       // Check if the restImage is already in WebP format
+    //       if (restImageExtension === '.webp') {
+    //         // Skip conversion, use the original WebP image
+    //         fs.rename(restImagePath, restImageWebPPath, error => {
+    //           if (error) {
+    //             console.error('Failed to rename the file:', error)
+    //           }
+    //         })
+    //       } else {
+    //         // Convert restImage to WebP
+    //         await sharp(restImagePath)
+    //           .toFormat('webp')
+    //           .toFile(restImageWebPPath)
 
-            // Remove original restImage
-            setTimeout(() => {
-              deleteFileWithRetry(restImagePath, 3, 3000)
-            }, 5000)
-          }
-        })
-      )
-    }
+    //         // Remove original restImage
+    //         setTimeout(() => {
+    //           deleteFileWithRetry(restImagePath, 3, 3000)
+    //         }, 5000)
+    //       }
+    //     })
+    //   )
+    // }
     next()
   })
 }
