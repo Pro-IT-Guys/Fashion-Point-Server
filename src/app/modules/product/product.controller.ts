@@ -22,17 +22,21 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
       (file: any) => `${convertToWebP(file.filename)}`
     )
 
-    const restImageFiles = uploadedFiles.restImage || []
-    let restImageWebP: string[] = []
-    if (restImageFiles.length > 0) {
-      restImageWebP = uploadedFiles.restImage.map(
-        (file: any) => `${IMAGE_URL}/${convertToWebP(file.filename)}`
-      )
-    }
+    // const restImageFiles = uploadedFiles.restImage || []
+    // let restImageWebP: string[] = []
+    // if (restImageFiles.length > 0) {
+    //   restImageWebP = uploadedFiles.restImage.map(
+    //     (file: any) => `${IMAGE_URL}/${convertToWebP(file.filename)}`
+    //   )
+    // }
+
+    // split restImage
+    const restImageWebP = productData.restImage.split(',')
 
     productData.frontImage = `${IMAGE_URL}/${frontImageWebP[0]}`
     productData.backImage = `${IMAGE_URL}/${backImageWebP[0]}`
     productData.restImage = restImageWebP
+    // productData.restImage = restImageWebP
   }
 
   const product = await ProductService.createProduct(productData)

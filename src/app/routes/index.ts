@@ -13,6 +13,7 @@ import { MessageRoute } from '../modules/Message/message.route'
 import { CartRoute } from '../modules/cart/cart.route'
 import { ReviewRoute } from '../modules/review/review.route'
 import { OfferRoute } from '../modules/offer/offer.route'
+import { ImageUploadRoute } from '../modules/imageUpload/imageUpload.route'
 // import { OfferRoute } from '../modules/offer/offer.route'
 
 const router = express.Router()
@@ -73,6 +74,10 @@ const routes = [
   {
     path: '/offer',
     route: OfferRoute,
+  },
+  {
+    path: '/image',
+    route: ImageUploadRoute,
   },
 ]
 

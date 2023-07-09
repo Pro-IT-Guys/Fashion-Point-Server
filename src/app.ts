@@ -30,6 +30,8 @@ app.use('/api/v1', routes)
 // Global error handler
 app.use(globalErrorHandler)
 
+app.use('/images', express.static(path.join(__dirname, 'images')))
+
 // Serve static files
 app.use(
   '/images/product',
