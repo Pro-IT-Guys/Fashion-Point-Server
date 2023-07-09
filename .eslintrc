@@ -24,6 +24,7 @@
     "node": true
   },
   "globals": {
-    "process": "readonly"
+    "process": "readonly",
+    "Express": "readonly"
   }
 }

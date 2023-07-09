@@ -140,7 +140,9 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
       return
     }
 
-    const uploadedFiles = req.files as any
+    const uploadedFiles = req.files as {
+      [fieldname: string]: Express.Multer.File[]
+    }
 
     // Convert frontImage to WebP
     if (uploadedFiles?.frontImage) {
@@ -204,7 +206,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if (uploadedFiles?.restImage) {
       const restImages = uploadedFiles.restImage
       await Promise.all(
-        restImages.map(async (image: any) => {
+        restImages.map(async (image: Express.Multer.File) => {
           const restImagePath = image.path
           const restImageExtension = path.extname(restImagePath).toLowerCase()
           const restImageWebPPath = path.join(
