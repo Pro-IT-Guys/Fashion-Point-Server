@@ -4,6 +4,7 @@ import { offerController } from './offer.controller'
 const router = express.Router()
 
 router.post('/', offerController.createOffer)
-router.get('/:id', offerController.getOfferById)
+router.delete('/:id', offerController.deleteOfferById)
+router.get('/', offerController.getOffer)
 
 export const OfferRoute = router

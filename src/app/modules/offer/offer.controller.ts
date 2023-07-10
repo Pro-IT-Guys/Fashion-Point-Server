@@ -13,9 +13,8 @@ const createOffer = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
-const getOfferById = catchAsync(async (req: Request, res: Response) => {
-  const offerId = req.params.id
-  const offer = await offerService.getOfferById(offerId)
+const getOffer = catchAsync(async (req: Request, res: Response) => {
+  const offer = await offerService.getOffer()
   const responseData = {
     data: offer,
     message: 'Offer fetched successfully',
@@ -23,7 +22,17 @@ const getOfferById = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const deleteOfferById = catchAsync(async (req: Request, res: Response) => {
+  const offer = await offerService.deleteOfferById(req.params.id)
+  const responseData = {
+    data: offer,
+    message: 'Offer deleted successfully',
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 export const offerController = {
   createOffer,
-  getOfferById,
+  getOffer,
+  deleteOfferById,
 }
