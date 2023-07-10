@@ -2,7 +2,7 @@ import { IPrivacy } from "./privacy.interface"
 import privacyModel from "./privacy.model"
 
 
-const createPrivacyService = async (data: IPrivacy) => {
+const createPrivacyPolicy = async (data: IPrivacy) => {
   const existingTerms = await privacyModel.findOne()
 
   if (existingTerms) {
@@ -20,6 +20,12 @@ const createPrivacyService = async (data: IPrivacy) => {
   }
 }
 
+const getPrivacyPolicy = async () => {
+    const existingTerms = await privacyModel.findOne()
+    return existingTerms
+}
+
 export const PrivacyServices = {
-createPrivacyService,
+    createPrivacyPolicy,
+getPrivacyPolicy
 }

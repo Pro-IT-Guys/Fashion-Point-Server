@@ -15,6 +15,17 @@ const createTermsCondition = catchAsync(async (req: Request, res: Response) => {
   sendSuccessResponse(res, responseData)
 })
 
+const getTermsCondition = catchAsync(async (req: Request, res: Response) => {
+  const result = await TermsConditionService.getTermsConditionService()
+
+  const responseData = {
+    message: 'Terms and Condition fetched successfully',
+    data: result,
+  }
+  sendSuccessResponse(res, responseData)
+})
+
 export const TermsConditionController = {
   createTermsCondition,
+  getTermsCondition,
 }

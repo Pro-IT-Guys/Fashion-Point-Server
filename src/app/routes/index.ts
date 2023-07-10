@@ -16,6 +16,7 @@ import { OfferRoute } from '../modules/offer/offer.route'
 import { ImageUploadRoute } from '../modules/imageUpload/imageUpload.route'
 import { TermsConditionRoute } from '../modules/terms-condition/terms.route'
 import { PrivacyPolicyRoute } from '../modules/privacyPolicy/privacy.route'
+import { ReturnPolicyRoute } from '../modules/returnPoilcy/return.route'
 // import { OfferRoute } from '../modules/offer/offer.route'
 
 const router = express.Router()
@@ -88,6 +89,10 @@ const routes = [
   {
     path: '/privacy-policy',
     route: PrivacyPolicyRoute,
+  },
+  {
+    path: '/return-policy',
+    route: ReturnPolicyRoute,
   },
 ]
 

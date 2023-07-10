@@ -19,6 +19,12 @@ const createTermsConditionService = async (data: ITerms) => {
   }
 }
 
+const getTermsConditionService = async () => {
+    const existingTerms = await termsModel.findOne()
+    return existingTerms
+}
+
 export const TermsConditionService = {
   createTermsConditionService,
+getTermsConditionService
 }
