@@ -49,11 +49,9 @@ const userSchema = new Schema<IUser>(
     shippingAddress: {
       country: {
         type: String,
-        required: true,
       },
       state: {
         type: String,
-        required: true,
       },
       city: {
         type: String,
