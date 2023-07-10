@@ -63,7 +63,7 @@ io.on('connection', (socket: any) => {
 
 /* This code is setting up a listener for uncaught exception. It's a synchronous process */
 process.on('uncaughtException', error => {
-  errorLogger.error(error)
+  console.log(error)
   process.exit(1)
 })
 
@@ -71,7 +71,7 @@ process.on('uncaughtException', error => {
 process.on('unhandledRejection', error => {
   if (server) {
     server.close(() => {
-      errorLogger.error(error)
+      console.log(error)
       process.exit(1)
     })
   }
@@ -86,7 +86,7 @@ and needs to be scaled down or updated. */
 process.on('SIGTERM', () => {
   if (server) {
     server.close(() => {
-      successLogger.info('Process terminated')
+      console.log('Process terminated')
     })
   }
 })
@@ -97,14 +97,14 @@ async function databaseConnection() {
     if (config.env === 'development') {
       console.log('Database connected successfully')
     } else {
-      successLogger.info('Database connected successfully')
+      console.log('Database connected successfully')
     }
 
     server = app.listen(config.port, async () => {
       if (config.env === 'development') {
         console.log(`Server is listening on port ${config.port}`)
       } else {
-        successLogger.info(`Server is listening on port ${config.port}`)
+        console.log(`Server is listening on port ${config.port}`)
       }
 
       const currentDate = new Date()
@@ -124,7 +124,7 @@ async function databaseConnection() {
       }
     })
   } catch (error) {
-    errorLogger.error('Error while connecting database: ', error)
+    console.log('Error while connecting database: ', error)
   }
 }
 
