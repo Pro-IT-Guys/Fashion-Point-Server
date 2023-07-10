@@ -85,7 +85,29 @@ const deleteOfferById = async (id: string): Promise<IOffer> => {
   if (!offer) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Offer not found')
   }
-  return offer
+
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+
+    const updatedProducts = await productModel.updateMany(
+      { _id: { $in: offer.product } },
+      { $set: { discountPrice: 0, isVisible: false } }
+    )
+
+    if (updatedProducts.modifiedCount <= 0) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        'Unable to update product prices'
+      )
+    }
+    await session.commitTransaction()
+    session.endSession()
+    return offer
+  } catch (error) {
+    session.endSession()
+    throw error
+  }
 }
 
 export const offerService = {
