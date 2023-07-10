@@ -14,6 +14,10 @@ const offerSchema = new Schema<IOffer>(
         required: true,
       },
     ],
+    image: {
+      type: String,
+      required: true,
+    },
     discountPrice: {
       type: Number,
       required: true,
