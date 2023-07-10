@@ -131,7 +131,7 @@ const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
   upload(req, res, async error => {
     if (error instanceof multer.MulterError) {
       if (error.code === 'LIMIT_FILE_SIZE') {
-        error.message = 'File size exceeds the allowed limit of 2MB.'
+        error.message = 'File size exceeds the allowed limit of 10MB.'
       }
     }
 

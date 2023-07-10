@@ -2,8 +2,6 @@ import catchAsync from '../../../shared/catchAsync'
 import { RequestHandler } from 'express'
 
 const fileUpload: RequestHandler = catchAsync(async (req, res) => {
-
-   
   try {
     if (req.file) {
       res.json({
@@ -22,7 +20,7 @@ const fileUpload: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const multiFileUploads: RequestHandler = catchAsync(async (req, res) => {
-    console.log('req.files', req.files)
+  console.log('req.files', req.files)
   try {
     if (!req.files) {
       return res
