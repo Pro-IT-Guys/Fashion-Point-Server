@@ -14,6 +14,8 @@ import { CartRoute } from '../modules/cart/cart.route'
 import { ReviewRoute } from '../modules/review/review.route'
 import { OfferRoute } from '../modules/offer/offer.route'
 import { ImageUploadRoute } from '../modules/imageUpload/imageUpload.route'
+import { TermsConditionRoute } from '../modules/terms-condition/terms.route'
+import { PrivacyPolicyRoute } from '../modules/privacyPolicy/privacy.route'
 // import { OfferRoute } from '../modules/offer/offer.route'
 
 const router = express.Router()
@@ -78,6 +80,14 @@ const routes = [
   {
     path: '/image',
     route: ImageUploadRoute,
+  },
+  {
+    path: '/terms-condition',
+    route: TermsConditionRoute,
+  },
+  {
+    path: '/privacy-policy',
+    route: PrivacyPolicyRoute,
   },
 ]
 
