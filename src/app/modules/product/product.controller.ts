@@ -9,6 +9,7 @@ import { IPaginationOption } from '../../../interfaces/sharedInterface'
 import { paginationFields } from '../../../constant/shared.constant'
 import httpStatus from 'http-status'
 import convertToWebP from '../../helpers/convertImageToWebp'
+import { convertMultipleValuesToObject } from '../../helpers/convertMultipleValuesIntoObject'
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const productData = req.body
@@ -89,7 +90,13 @@ const getAllProduct = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, ['searchTerm', ...PRODUCT_FILTER_FIELDS])
   const paginationOption: IPaginationOption = pick(req.query, paginationFields)
 
-  const result = await ProductService.getAllProduct(filters, paginationOption)
+  const convertedFilters: Record<string, string | string[]> =
+    convertMultipleValuesToObject(filters as Record<string, string | string[]>)
+
+  const result = await ProductService.getAllProduct(
+    convertedFilters,
+    paginationOption
+  )
 
   const responseData = {
     statusCode: httpStatus.OK,
