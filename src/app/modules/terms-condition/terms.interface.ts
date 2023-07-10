@@ -4,4 +4,4 @@ export interface ITerms {
   content: string
 }
 
-export type ITermsModel = Model<ITerms, Record<string, unknown>>;
+export type ITermsModel = Model<ITerms, Record<string, unknown>>

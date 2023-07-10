@@ -1,6 +1,5 @@
-import { IPrivacy } from "./privacy.interface"
-import privacyModel from "./privacy.model"
-
+import { IPrivacy } from './privacy.interface'
+import privacyModel from './privacy.model'
 
 const createPrivacyPolicy = async (data: IPrivacy) => {
   const existingTerms = await privacyModel.findOne()
@@ -21,11 +20,11 @@ const createPrivacyPolicy = async (data: IPrivacy) => {
 }
 
 const getPrivacyPolicy = async () => {
-    const existingTerms = await privacyModel.findOne()
-    return existingTerms
+  const existingTerms = await privacyModel.findOne()
+  return existingTerms
 }
 
 export const PrivacyServices = {
-    createPrivacyPolicy,
-getPrivacyPolicy
+  createPrivacyPolicy,
+  getPrivacyPolicy,
 }

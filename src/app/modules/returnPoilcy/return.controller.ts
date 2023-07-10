@@ -24,6 +24,6 @@ const getReturnPolicy = catchAsync(async (req: Request, res: Response) => {
 })
 
 export const ReturnPolicyController = {
-    createReturnPolicy,
-    getReturnPolicy,
+  createReturnPolicy,
+  getReturnPolicy,
 }

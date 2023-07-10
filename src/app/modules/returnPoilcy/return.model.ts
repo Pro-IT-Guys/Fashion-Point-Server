@@ -8,5 +8,8 @@ const returnPolicySchema = new Schema<IReturn>({
   },
 })
 
-const returnPolicyModel = model<IReturn, IReturnModel>(`ReturnPolicy`, returnPolicySchema)
+const returnPolicyModel = model<IReturn, IReturnModel>(
+  `ReturnPolicy`,
+  returnPolicySchema
+)
 export default returnPolicyModel

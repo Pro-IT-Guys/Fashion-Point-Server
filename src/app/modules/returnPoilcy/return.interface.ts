@@ -4,4 +4,4 @@ export interface IReturn {
   content: string
 }
 
-export type IReturnModel = Model<IReturn, Record<string, unknown>>;
+export type IReturnModel = Model<IReturn, Record<string, unknown>>

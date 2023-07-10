@@ -4,4 +4,4 @@ export interface IPrivacy {
   content: string
 }
 
-export type IPrivacyModel = Model<IPrivacy, Record<string, unknown>>;
+export type IPrivacyModel = Model<IPrivacy, Record<string, unknown>>
