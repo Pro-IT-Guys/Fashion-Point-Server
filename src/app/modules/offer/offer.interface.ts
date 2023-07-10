@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose'
 export interface IOffer {
   title: string
   product: Types.ObjectId[]
+  image: string
   discountPrice: number
   startFrom: Date
   endAt: Date
