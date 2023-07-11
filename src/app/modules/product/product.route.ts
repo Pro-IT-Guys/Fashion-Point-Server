@@ -18,7 +18,7 @@ router.get('/:id', ProductController.getProductById)
 router.get('/path/:path', ProductController.getProductByPath)
 router.get('/sku/:sku', ProductController.getProductBySku)
 router.get('/', ProductController.getAllProduct)
-router.patch('/:id', uploadMiddleware, ProductController.updateProduct)
+router.patch('/:id', uploadMiddleware, formatArrayFields, ProductController.updateProduct)
 router.delete('/:id', ProductController.deleteProduct)
 
 export const ProductRoute = router
