@@ -54,6 +54,14 @@ const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productData = req.body
   const uploadedFiles = req.files as any
 
+  if (productData?.restImage[0]?.split(',')?.length > 0) {
+    const restImageWebP = productData.restImage.split(',')
+    productData.restImage = restImageWebP
+    // console.log(productData?.restImage[0]?.split(',')?.length, 'condition')
+  }
+
+
+
   if (Object.keys(uploadedFiles).length !== 0) {
     if (uploadedFiles.frontImage) {
       const frontImageWebP = uploadedFiles.frontImage.map(
@@ -69,12 +77,12 @@ const updateProduct = catchAsync(async (req: Request, res: Response) => {
       productData.backImage = `${IMAGE_URL}/${backImageWebP[0]}`
     }
 
-    if (uploadedFiles.restImage) {
-      const restImageWebP = uploadedFiles.restImage.map(
-        (file: any) => `${convertToWebP(file.filename)}`
-      )
-      productData.restImage = `${IMAGE_URL}/${restImageWebP}`
-    }
+    // if (uploadedFiles.restImage) {
+    //   const restImageWebP = uploadedFiles.restImage.map(
+    //     (file: any) => `${convertToWebP(file.filename)}`
+    //   )
+    //   productData.restImage = `${IMAGE_URL}/${restImageWebP}`
+    // }
   }
 
   const product = await ProductService.updateProduct(productId, productData)

@@ -20,7 +20,7 @@ const fileUpload: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const multiFileUploads: RequestHandler = catchAsync(async (req, res) => {
-  console.log('req.files', req.files)
+
   try {
     if (!req.files) {
       return res
