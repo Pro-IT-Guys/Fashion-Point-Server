@@ -3,10 +3,17 @@ import ApiError from '../../../errors/ApiError'
 import { ICupon } from './cupon.interface'
 import cuponModel from './cupon.model'
 import { Types } from 'mongoose'
+import generateUniqueSKU from '../../helpers/generateUniqueSKU'
 
 const createCupon = async (cuponData: ICupon): Promise<ICupon> => {
   const isExist = await cuponModel.findOne({ code: cuponData.code })
   if (isExist) throw new ApiError(httpStatus.BAD_REQUEST, 'Cupon already exist')
+
+  let cuponCode = generateUniqueSKU(8)
+  while (await cuponModel.findOne({ code: cuponCode })) {
+    cuponCode = generateUniqueSKU(8)
+  }
+  cuponData.code = cuponCode
 
   const cupon = await cuponModel.create(cuponData)
   if (!cupon) throw new ApiError(httpStatus.BAD_REQUEST, 'Cupon not created')
