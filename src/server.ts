@@ -3,7 +3,6 @@
 import mongoose from 'mongoose'
 import app from './app'
 import config from './config'
-import { errorLogger, successLogger } from './shared/logger'
 import { Server } from 'http'
 import offerModel from './app/modules/offer/offer.model'
 import { scheduleCronJobs } from './app/helpers/cornJobs'
