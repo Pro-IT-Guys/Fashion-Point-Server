@@ -1,6 +1,6 @@
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
-import { IReview } from './review.interface'
+import { IReview, IReviewCount } from './review.interface'
 import reviewModel from './review.model'
 import mongoose from 'mongoose'
 import productModel from '../product/product.model'
@@ -57,6 +57,32 @@ const createReview = async (review: IReview): Promise<IReview> => {
   return newReview
 }
 
+const getAllReviews = async (reviewIds: string[]): Promise<IReviewCount> => {
+  const reviews = await reviewModel.find({ _id: { $in: reviewIds } })
+  if (!reviews) throw new ApiError(httpStatus.BAD_REQUEST, `No reviews found`)
+
+  const rating =
+    reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+  const oneStar = reviews.filter(review => review.rating === 1).length
+  const twoStar = reviews.filter(review => review.rating === 2).length
+  const threeStar = reviews.filter(review => review.rating === 3).length
+  const fourStar = reviews.filter(review => review.rating === 4).length
+  const fiveStar = reviews.filter(review => review.rating === 5).length
+
+  const reviewCountData = {
+    rating,
+    oneStar,
+    twoStar,
+    threeStar,
+    fourStar,
+    fiveStar,
+    review: reviews,
+  }
+
+  return reviewCountData
+}
+
 export const ReviewService = {
   createReview,
+  getAllReviews,
 }

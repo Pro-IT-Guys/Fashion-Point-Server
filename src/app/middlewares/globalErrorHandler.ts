@@ -16,7 +16,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   if (config.env === 'development') {
     console.log(error)
   } else {
-    errorLogger.error(error)
+    console.log(error)
   }
 
   const status = 'false'

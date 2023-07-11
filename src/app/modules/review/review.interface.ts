@@ -7,6 +7,15 @@ export interface IReview {
   comment: string
 }
 
+export interface IReviewCount {
+  rating: number
+  oneStar: number
+  twoStar: number
+  threeStar: number
+  fourStar: number
+  fiveStar: number
+  review: IReview[]
+}
 export interface IReviewModel extends Model<IReview> {
   // eslint-disable-next-line no-unused-vars
   getReviewById(id: string): Promise<IReview>
