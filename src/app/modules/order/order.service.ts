@@ -93,8 +93,6 @@ const getAllOrder = async (
     .limit(limit as number)
   const total = await orderModel.countDocuments()
 
-  console.log('result', result)
-
   const responseData = {
     meta: {
       page,

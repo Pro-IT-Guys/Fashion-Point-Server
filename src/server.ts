@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import mongoose from 'mongoose'
 import app from './app'
 import config from './config'
-import { Server } from 'http'
+// import { Server } from 'http'
 import offerModel from './app/modules/offer/offer.model'
 import { scheduleCronJobs } from './app/helpers/cornJobs'
 import { IAddId } from './app/modules/offer/offer.interface'
+import http from 'http'
 
-let server: Server
+const server = http.createServer(app)
 
-// Socket start ====================================================================>>>
-/* eslint-disable @typescript-eslint/no-var-requires */
-const io = require('socket.io')(8080, {
+const { Server } = require('socket.io')
+const io = new Server(server, {
   cors: {
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
@@ -23,6 +24,7 @@ const activeUsers = new Map()
 
 io.on('connection', (socket: any) => {
   socket.on('join', (userId: string) => {
+    console.log('User joined: ', userId)
     if (userId && !activeUsers.has(userId)) {
       activeUsers.set(userId, socket.id)
     }
@@ -99,7 +101,7 @@ async function databaseConnection() {
       console.log('Database connected successfully')
     }
 
-    server = app.listen(config.port, async () => {
+    server.listen(config.port, async () => {
       if (config.env === 'development') {
         console.log(`Server is listening on port ${config.port}`)
       } else {

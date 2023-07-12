@@ -84,7 +84,6 @@ const bulkUpdateCart = async (
 
 const getCartByUserId = async (userId: string): Promise<ICart> => {
   const cart = await cartModel.findOne({ userId }).populate('product.productId')
-  console.log(cart)
 
   if (!cart) throw new ApiError(httpStatus.BAD_REQUEST, 'Cart not found')
   return cart
