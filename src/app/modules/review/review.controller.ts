@@ -13,7 +13,7 @@ const createReview = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getAllReviews = catchAsync(async (req: Request, res: Response) => {
-  const { productId } = req.body
+  const { productId } = req.params
   const review = await ReviewService.getAllReviews(productId)
   const responseData = {
     data: review,

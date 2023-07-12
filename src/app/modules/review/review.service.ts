@@ -57,8 +57,8 @@ const createReview = async (review: IReview): Promise<IReview> => {
   return newReview
 }
 
-const getAllReviews = async (productId: string[]): Promise<IReviewCount> => {
-  const reviews = await reviewModel.find({ productId })
+const getAllReviews = async (productId: string): Promise<IReviewCount> => {
+  const reviews = await reviewModel.find({ productId }).populate('userId')
   if (!reviews) throw new ApiError(httpStatus.BAD_REQUEST, `No reviews found`)
 
   const rating =
