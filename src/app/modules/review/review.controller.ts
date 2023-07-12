@@ -13,8 +13,8 @@ const createReview = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getAllReviews = catchAsync(async (req: Request, res: Response) => {
-  const { reviewIds } = req.body
-  const review = await ReviewService.getAllReviews(reviewIds)
+  const { productId } = req.body
+  const review = await ReviewService.getAllReviews(productId)
   const responseData = {
     data: review,
     message: 'Review faced successfully',
