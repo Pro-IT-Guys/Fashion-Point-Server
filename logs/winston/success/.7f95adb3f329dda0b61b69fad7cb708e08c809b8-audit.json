@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "F:\\Company Project\\Pro-It-Guys\\Fashion-Point Ecommerce\\Fashion-Point-Server\\logs\\winston\\success\\.7f95adb3f329dda0b61b69fad7cb708e08c809b8-audit.json",
+    "files": [
+        {
+            "date": 1689412572587,
+            "name": "F:\\Company Project\\Pro-It-Guys\\Fashion-Point Ecommerce\\Fashion-Point-Server\\logs\\winston\\success\\phu-2023-07-15-15-success.log",
+            "hash": "5c9ec0b07039a4a69a25362cd10cedbd50ebdb48fb81b636fdf160cc3a99030c"
+        }
+    ],
+    "hashType": "sha256"
+}

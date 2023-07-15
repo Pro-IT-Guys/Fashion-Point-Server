@@ -73,18 +73,10 @@ const productSchema = new Schema<IProduct>(
       type: [String],
       required: true,
     },
-    brand: {
-      type: String,
-      required: true,
-    },
     review: {
       type: [Schema.Types.ObjectId],
     },
     type: {
-      type: [String],
-      required: true,
-    },
-    style: {
       type: String,
       required: true,
     },

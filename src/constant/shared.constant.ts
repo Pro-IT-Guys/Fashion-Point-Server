@@ -1,3 +1,3 @@
 export const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder']
 
-export const fieldsForFormatArray = ['color', 'size', 'tag', 'type']
+export const fieldsForFormatArray = ['color', 'size', 'tag']
