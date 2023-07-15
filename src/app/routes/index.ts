@@ -89,7 +89,7 @@ const routes = [
   },
   {
     path: '/privacy-policy',
-    route: PrivacyPolicyRoute,
+    route: PrivacyPolicyRoute, 
   },
   {
     path: '/return-policy',
@@ -103,6 +103,8 @@ const routes = [
 
 routes.forEach(route => {
   router.use(route.path, route.route)
-})
+}) 
 
 export default router
+
+
