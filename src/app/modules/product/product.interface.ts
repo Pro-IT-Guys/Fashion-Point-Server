@@ -19,7 +19,6 @@ export interface IProduct {
   tag: string[]
   review?: Schema.Types.ObjectId[] // productReview id ref
   type: string
-  fabric: string
   isVisibleOffer: boolean
 }
 

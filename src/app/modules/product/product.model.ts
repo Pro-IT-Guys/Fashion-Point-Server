@@ -80,10 +80,6 @@ const productSchema = new Schema<IProduct>(
       type: String,
       required: true,
     },
-    fabric: {
-      type: String,
-      required: true,
-    },
     isVisibleOffer: {
       type: Boolean,
       default: false,
