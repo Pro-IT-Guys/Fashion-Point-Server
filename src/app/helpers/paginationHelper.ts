@@ -7,7 +7,6 @@ interface IOption {
   sortOrder?: SortOrder
 }
 
-
 interface IOptionWithSkip extends IOption {
   skip: number
 }
